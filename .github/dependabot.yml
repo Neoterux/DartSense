@@ -7,7 +7,7 @@ version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
-    schelude:
+    schedule:
       interval: "weekly"
     labels:
       - "github"
@@ -22,7 +22,6 @@ updates:
       day: "sunday"
       time: "06:00"
       timezone: "America/Guayaquil"
-
     commit-message:
       prefix: "[pip]"
       prefix-development: "[pip dev]"
