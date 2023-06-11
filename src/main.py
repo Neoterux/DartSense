@@ -49,7 +49,7 @@ lexer = lex.lex()
 
 #Testeando
 data = '''
-
+  5 + 3;
     '''
 
  #Datos de entrada
