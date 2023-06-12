@@ -4,17 +4,31 @@ import ply.lex as lex
 
 #Diccionario de palabras reservadas
 reserved = {
+  'while': 'WHILE',
+  'for': 'FOR',
+  'return': 'RETURN',
+  'print': 'PRINT',
+  'int': 'INTTYPE',
+  'List': 'LIST',
 }
 
  #Sequencia de tokens, puede ser lista o tupla
 tokens = (
+    'INT',
     'PLUS',
     'MINUS',
     'TIMES',
     'DIVIDE',
     'LPAREN',
     'RPAREN',
+    'LSBRACKET',
+    'RSBRACKET',
     'ID',
+    'EQUALS',
+    'DOTCOMA',
+    'COMA',
+    'OBJTYPE',
+    'STR'
 
 ) + tuple(reserved.values())
 
@@ -25,6 +39,14 @@ t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
+t_LSBRACKET  = r'\['
+t_RSBRACKET  = r'\]'
+t_DOTCOMA = r';'
+t_COMA = r','
+t_EQUALS = r'='
+t_INT = r'-?\d+'
+t_OBJTYPE = r'<[\w]+>'
+t_STR = r'''("[^"]*"|'[^']*')'''
 
  #Para contabilizar nro de líneas
 def t_newline(t):
@@ -48,12 +70,16 @@ def t_error(t):
 lexer = lex.lex()
 
 #Testeando
-data = '''
-  5 + 3;
-    '''
+data_List_jairo = '''
+  List<int> numeros = [];
+  List<String> nombres = List<String>();
+  List<double> decimales = List();
+  List<String> numeros = ["Hola", "Mundo", "!"];
+  List<int> numeros = [1, 2, 3];
+'''
 
  #Datos de entrada
-lexer.input(data)
+lexer.input(data_List_jairo)
 
  # Tokenizador
 while True:
