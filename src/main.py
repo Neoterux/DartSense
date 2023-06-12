@@ -36,6 +36,7 @@ tokens = (
     'INCREMENT_OPERATOR',
     'INCREMENT_SELF_ASSIGN_OPERATOR',
     'DECREMENT_SELF_ASSIGN_OPERATOR',
+    'METHOD',
 
 ) + tuple(reserved.values())
 
@@ -58,6 +59,7 @@ t_EQUALS = r'='
 t_INT = r'-?\d+'
 t_OBJTYPE = r'<[\w]+>'
 t_STR = r'''("[^"]*"|'[^']*')'''
+t_METHOD = r'\.[\w]*'
 
  #Para contabilizar nro de líneas
 def t_newline(t):
@@ -71,6 +73,10 @@ def t_ID(t):
 
  # Ignorar lo que no sea un token en mi LP
 t_ignore  = ' \t'
+
+def t_COMMENTS(t):
+  r'//.*'
+  pass
 
  #Presentación de errores léxicos
 def t_error(t):
@@ -87,6 +93,11 @@ data_List_jairo = '''
   List<double> decimales = List();
   List<String> numeros = ["Hola", "Mundo", "!"];
   List<int> numeros = [1, 2, 3];
+
+  var list = List.filled(3, 0);
+  print(list); // [0, 0, 0]
+  list[1] = 3;
+  print(list); // [0, 3, 0]
 '''
 
 data_int_jairo = '''
@@ -101,7 +112,7 @@ data_int_jairo = '''
 '''
 
  #Datos de entrada
-lexer.input(data_int_jairo)
+lexer.input(data_List_jairo)
 
  # Tokenizador
 while True:
