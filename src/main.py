@@ -5,6 +5,10 @@ import ply.lex as lex
 #Diccionario de palabras reservadas
 reserved = {
   'while': 'WHILE',
+  'if': 'IF',
+  'true': 'TRUE',
+  'false': 'FALSE',
+  'bool': 'BOOL',
   'for': 'FOR',
   'return': 'RETURN',
   'print': 'PRINT',
@@ -26,6 +30,8 @@ tokens = (
     'RPAREN',
     'LSBRACKET',
     'RSBRACKET',
+    'LCURLY_BRACKET',
+    'RCURLY_BRACKET',
     'ID',
     'EQUALS',
     'DOTCOMA',
@@ -37,6 +43,13 @@ tokens = (
     'INCREMENT_SELF_ASSIGN_OPERATOR',
     'DECREMENT_SELF_ASSIGN_OPERATOR',
     'METHOD',
+    'GREATER_THAN',
+    'GREATER_THAN_EQUAL',
+    'LESS_THAN',
+    'LESS_THAN_EQUAL',
+    'EQUAL',
+    'NOT_EQUAL',
+    'AND',
 
 ) + tuple(reserved.values())
 
@@ -53,6 +66,8 @@ t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_LSBRACKET  = r'\['
 t_RSBRACKET  = r'\]'
+t_LCURLY_BRACKET = r'\{'
+t_RCURLY_BRACKET = r'\}'
 t_DOTCOMA = r';'
 t_COMA = r','
 t_EQUALS = r'='
@@ -60,6 +75,13 @@ t_INT = r'-?\d+'
 t_OBJTYPE = r'<[\w]+>'
 t_STR = r'''("[^"]*"|'[^']*')'''
 t_METHOD = r'\.[\w]*'
+t_GREATER_THAN = r'>'
+t_GREATER_THAN_EQUAL = r'<='
+t_LESS_THAN = r'<'
+t_LESS_THAN_EQUAL = r'<='
+t_EQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_AND = r'&&'
 
  #Para contabilizar nro de líneas
 def t_newline(t):
@@ -110,9 +132,28 @@ data_int_jairo = '''
   var numero -= 1;
   var numero += 2;
 '''
+data_test_jairo = '''
+if (array.isEmpty) {
+    return false;
+  }
+
+  if (sequence.isEmpty) {
+    return true;
+  }
+  int arrayIndex = 0;
+  int sequenceIndex = 0;
+
+  while (sequenceIndex < sequence.length && arrayIndex < array.length) {
+    if (sequence[sequenceIndex] == array[arrayIndex]) {
+      sequenceIndex += 1;
+    }
+    arrayIndex += 1;
+  }
+  return sequenceIndex == sequence.length;
+'''
 
  #Datos de entrada
-lexer.input(data_List_jairo)
+lexer.input(data_test_jairo)
 
  # Tokenizador
 while True:
