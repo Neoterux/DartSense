@@ -9,6 +9,9 @@ reserved = {
   'return': 'RETURN',
   'print': 'PRINT',
   'int': 'INTTYPE',
+  'var': 'VAR',
+  'const': 'CONST',
+  'final': 'FINAL',
   'List': 'LIST',
 }
 
@@ -28,11 +31,19 @@ tokens = (
     'DOTCOMA',
     'COMA',
     'OBJTYPE',
-    'STR'
+    'STR',
+    'DECREMENT_OPERATOR',
+    'INCREMENT_OPERATOR',
+    'INCREMENT_SELF_ASSIGN_OPERATOR',
+    'DECREMENT_SELF_ASSIGN_OPERATOR',
 
 ) + tuple(reserved.values())
 
  #Exp Regulares para tokens de símbolos
+t_DECREMENT_OPERATOR = r'--'
+t_INCREMENT_OPERATOR = r'\+\+'
+t_INCREMENT_SELF_ASSIGN_OPERATOR = r'\+='
+t_DECREMENT_SELF_ASSIGN_OPERATOR = r'\-='
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
@@ -78,8 +89,19 @@ data_List_jairo = '''
   List<int> numeros = [1, 2, 3];
 '''
 
+data_int_jairo = '''
+  --numero;
+  ++numero;
+  int numero = 1 - 2;
+  int numero = 1 + 2;
+  const numero = 123;
+  var numero = 12;
+  var numero -= 1;
+  var numero += 2;
+'''
+
  #Datos de entrada
-lexer.input(data_List_jairo)
+lexer.input(data_int_jairo)
 
  # Tokenizador
 while True:
