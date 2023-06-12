@@ -17,6 +17,13 @@ reserved = {
     "const": "CONST",
     "final": "FINAL",
     "List": "LIST",
+    "num": "NUM",
+    "double": "DOUBLETYPE",
+    "String": "STRINGTYPE",
+    'HashSet': "HASHSETTYPE",
+    'Set': "SETTYPE",
+    'LinkedHashSet': "LINKEDHASHSETTYPE",
+    'SplayTreeSet': "SPLAYTREESETTYPE"
 }
 
 # Sequencia de tokens, puede ser lista o tupla
@@ -52,6 +59,7 @@ tokens = (
     "AND",
     "COLON",
     "RECORD_ARG",
+    "DOUBLE",
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
@@ -75,9 +83,9 @@ t_EQUALS = r"="
 t_INT = r"-?\d+"
 t_OBJTYPE = r"<[\w]+>"
 t_STR = r"""(\"(?:[^\"\\]|\\.)*\")|(\'(?:[^\'\\]|\\.)*\')"""
-t_METHOD = r"\.[\w]*"
+t_METHOD = r"\.[a-zA-Z0-9_-][a-zA-Z0-9_-]*"
 t_GREATER_THAN = r">"
-t_GREATER_THAN_EQUAL = r"<="
+t_GREATER_THAN_EQUAL = r">="
 t_LESS_THAN = r"<"
 t_LESS_THAN_EQUAL = r"<="
 t_EQUAL = r"=="
@@ -85,7 +93,7 @@ t_NOT_EQUAL = r"!="
 t_AND = r"&&"
 t_COLON = r":"
 t_RECORD_ARG = r"\$\d+"
-
+t_DOUBLE = r'-?((\d*\.\d+)|(\d+(\.)))'
 
 # Para contabilizar nro de líneas
 def t_newline(t):
@@ -104,7 +112,7 @@ t_ignore = " \t"
 
 
 def t_COMMENTS(t):
-    r"//.*"
+    r'(\/\/.*)|(\/\*.*\*\/)'
     pass
 
 
@@ -175,12 +183,40 @@ data_string_luis = """
   String str = "Hola mundo"
   String complex = "This is 'hello' from your \\"world\\""
 """
+data_double_jose = """
+  var numero = -2.653;
+  for( var i = 5. ; i >= 0.; i-- ) { 
+      numero += (i*.75) ; 
+   } 
+"""
 
+data_set_jose = """
+  var doubles_set = {-563.3, 230.3, .3, -165165., -166.};
+  var doubles_set_empty = <double>{};
+  var doubles_set_empty = Set<double>{};
+  var doubles_set_empty = HashSet<double>{};
+  var doubles_set_empty = LinkedHashSet<double>{};
+  var doubles_set_empty = SplayTreeSet<double>{};
+  // var names = {}; // Creates a map, not a set.
+"""
+
+data_test_jose = """
+  var valores = {-563.3, 230.3, .3, 1655., -166.};
+  num total = 0;
+  for(var i = 0. ; i <= valores.lenght; i++ ) { 
+      total += i ; 
+  } 
+  print(total);
+"""
 # Datos de entrada
 # lexer.input(data_test_jairo)
 
 # lexer.input(data_record_luis)
-lexer.input(data_string_luis)
+# lexer.input(data_string_luis)
+
+# lexer.input(data_double_jose)
+# lexer.input(data_set_jose)
+lexer.input(data_test_jose)
 
 # Tokenizador
 while True:
