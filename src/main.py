@@ -1,115 +1,124 @@
 import ply.lex as lex
 
-#Crear los tokens para la siguiente sintaxis
+# Crear los tokens para la siguiente sintaxis
 
-#Diccionario de palabras reservadas
+# Diccionario de palabras reservadas
 reserved = {
-  'while': 'WHILE',
-  'if': 'IF',
-  'true': 'TRUE',
-  'false': 'FALSE',
-  'bool': 'BOOL',
-  'for': 'FOR',
-  'return': 'RETURN',
-  'print': 'PRINT',
-  'int': 'INTTYPE',
-  'var': 'VAR',
-  'const': 'CONST',
-  'final': 'FINAL',
-  'List': 'LIST',
+    "while": "WHILE",
+    "if": "IF",
+    "true": "TRUE",
+    "false": "FALSE",
+    "bool": "BOOL",
+    "for": "FOR",
+    "return": "RETURN",
+    "print": "PRINT",
+    "int": "INTTYPE",
+    "var": "VAR",
+    "const": "CONST",
+    "final": "FINAL",
+    "List": "LIST",
 }
 
- #Sequencia de tokens, puede ser lista o tupla
+# Sequencia de tokens, puede ser lista o tupla
 tokens = (
-    'INT',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
-    'LSBRACKET',
-    'RSBRACKET',
-    'LCURLY_BRACKET',
-    'RCURLY_BRACKET',
-    'ID',
-    'EQUALS',
-    'DOTCOMA',
-    'COMA',
-    'OBJTYPE',
-    'STR',
-    'DECREMENT_OPERATOR',
-    'INCREMENT_OPERATOR',
-    'INCREMENT_SELF_ASSIGN_OPERATOR',
-    'DECREMENT_SELF_ASSIGN_OPERATOR',
-    'METHOD',
-    'GREATER_THAN',
-    'GREATER_THAN_EQUAL',
-    'LESS_THAN',
-    'LESS_THAN_EQUAL',
-    'EQUAL',
-    'NOT_EQUAL',
-    'AND',
-
+    "INT",
+    "PLUS",
+    "MINUS",
+    "TIMES",
+    "DIVIDE",
+    "LPAREN",
+    "RPAREN",
+    "LSBRACKET",
+    "RSBRACKET",
+    "LCURLY_BRACKET",
+    "RCURLY_BRACKET",
+    "ID",
+    "EQUALS",
+    "DOTCOMA",
+    "COMA",
+    "OBJTYPE",
+    "STR",
+    "DECREMENT_OPERATOR",
+    "INCREMENT_OPERATOR",
+    "INCREMENT_SELF_ASSIGN_OPERATOR",
+    "DECREMENT_SELF_ASSIGN_OPERATOR",
+    "METHOD",
+    "GREATER_THAN",
+    "GREATER_THAN_EQUAL",
+    "LESS_THAN",
+    "LESS_THAN_EQUAL",
+    "EQUAL",
+    "NOT_EQUAL",
+    "AND",
+    "COLON",
+    "RECORD_ARG",
 ) + tuple(reserved.values())
 
- #Exp Regulares para tokens de símbolos
-t_DECREMENT_OPERATOR = r'--'
-t_INCREMENT_OPERATOR = r'\+\+'
-t_INCREMENT_SELF_ASSIGN_OPERATOR = r'\+='
-t_DECREMENT_SELF_ASSIGN_OPERATOR = r'\-='
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
-t_LSBRACKET  = r'\['
-t_RSBRACKET  = r'\]'
-t_LCURLY_BRACKET = r'\{'
-t_RCURLY_BRACKET = r'\}'
-t_DOTCOMA = r';'
-t_COMA = r','
-t_EQUALS = r'='
-t_INT = r'-?\d+'
-t_OBJTYPE = r'<[\w]+>'
-t_STR = r'''("[^"]*"|'[^']*')'''
-t_METHOD = r'\.[\w]*'
-t_GREATER_THAN = r'>'
-t_GREATER_THAN_EQUAL = r'<='
-t_LESS_THAN = r'<'
-t_LESS_THAN_EQUAL = r'<='
-t_EQUAL = r'=='
-t_NOT_EQUAL = r'!='
-t_AND = r'&&'
+# Exp Regulares para tokens de símbolos
+t_DECREMENT_OPERATOR = r"--"
+t_INCREMENT_OPERATOR = r"\+\+"
+t_INCREMENT_SELF_ASSIGN_OPERATOR = r"\+="
+t_DECREMENT_SELF_ASSIGN_OPERATOR = r"\-="
+t_PLUS = r"\+"
+t_MINUS = r"-"
+t_TIMES = r"\*"
+t_DIVIDE = r"/"
+t_LPAREN = r"\("
+t_RPAREN = r"\)"
+t_LSBRACKET = r"\["
+t_RSBRACKET = r"\]"
+t_LCURLY_BRACKET = r"\{"
+t_RCURLY_BRACKET = r"\}"
+t_DOTCOMA = r";"
+t_COMA = r","
+t_EQUALS = r"="
+t_INT = r"-?\d+"
+t_OBJTYPE = r"<[\w]+>"
+t_STR = r"""(\"(?:[^\"\\]|\\.)*\")|(\'(?:[^\'\\]|\\.)*\')"""
+t_METHOD = r"\.[\w]*"
+t_GREATER_THAN = r">"
+t_GREATER_THAN_EQUAL = r"<="
+t_LESS_THAN = r"<"
+t_LESS_THAN_EQUAL = r"<="
+t_EQUAL = r"=="
+t_NOT_EQUAL = r"!="
+t_AND = r"&&"
+t_COLON = r":"
+t_RECORD_ARG = r"\$\d+"
 
- #Para contabilizar nro de líneas
+
+# Para contabilizar nro de líneas
 def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
+    r"\n+"
+    t.lexer.lineno += len(t.value)
+
 
 def t_ID(t):
-  r'[a-zA-Z_]+'
-  t.type = reserved.get(t.value,'ID')
-  return t
+    r"[a-zA-Z_]+"
+    t.type = reserved.get(t.value, "ID")
+    return t
 
- # Ignorar lo que no sea un token en mi LP
-t_ignore  = ' \t'
+
+# Ignorar lo que no sea un token en mi LP
+t_ignore = " \t"
+
 
 def t_COMMENTS(t):
-  r'//.*'
-  pass
+    r"//.*"
+    pass
 
- #Presentación de errores léxicos
+
+# Presentación de errores léxicos
 def t_error(t):
-  print("Componente léxico no reconocido '%s'" % t.value[0])
-  t.lexer.skip(1)
+    print("Componente léxico no reconocido '%s'" % t.value[0])
+    t.lexer.skip(1)
 
- #Contruir analizador
+
+# Contruir analizador
 lexer = lex.lex()
 
-#Testeando
-data_List_jairo = '''
+# Testeando
+data_List_jairo = """
   List<int> numeros = [];
   List<String> nombres = List<String>();
   List<double> decimales = List();
@@ -120,9 +129,9 @@ data_List_jairo = '''
   print(list); // [0, 0, 0]
   list[1] = 3;
   print(list); // [0, 3, 0]
-'''
+"""
 
-data_int_jairo = '''
+data_int_jairo = """
   --numero;
   ++numero;
   int numero = 1 - 2;
@@ -131,8 +140,8 @@ data_int_jairo = '''
   var numero = 12;
   var numero -= 1;
   var numero += 2;
-'''
-data_test_jairo = '''
+"""
+data_test_jairo = """
 if (array.isEmpty) {
     return false;
   }
@@ -150,15 +159,32 @@ if (array.isEmpty) {
     arrayIndex += 1;
   }
   return sequenceIndex == sequence.length;
-'''
+"""
 
- #Datos de entrada
-lexer.input(data_test_jairo)
+data_record_luis = """
+  var record = ('first', a: 2, b: true, 'last')
+  var record_alt = ({ a: 1, b: 'hola', c: (1, 2) })
+  var first = record.$1
+  var named = record.a
+  var xd = record.$3244
+  print(record) // ('first', a: 2, b: true, 'last')
+"""
 
- # Tokenizador
+data_string_luis = """
+  var str = 'sfsdfsdf'
+  String str = "Hola mundo"
+  String complex = "This is 'hello' from your \\"world\\""
+"""
+
+# Datos de entrada
+# lexer.input(data_test_jairo)
+
+# lexer.input(data_record_luis)
+lexer.input(data_string_luis)
+
+# Tokenizador
 while True:
-  tok = lexer.token()
-  if not tok:
-    break
-  print(tok)
-
+    tok = lexer.token()
+    if not tok:
+        break
+    print(tok)
