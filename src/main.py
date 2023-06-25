@@ -16,6 +16,16 @@ def p_ifStatement(p):
   | RCURLY_BRACKET
   '''
 
+def p_elseStatement(p):
+  '''codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET
+  | IF LCURLY_BRACKET
+  '''
+
+def p_ifElseStatement(p):
+  '''codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+  | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+  '''
+
 def p_NamedParametersfunction(p):
   '''codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
   | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET

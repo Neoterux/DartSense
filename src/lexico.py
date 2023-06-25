@@ -6,6 +6,7 @@ import ply.lex as lex
 reserved = {
     "while": "WHILE",
     "if": "IF",
+    "else": "ELSE",
     "true": "TRUE",
     "false": "FALSE",
     "bool": "BOOL",
@@ -154,17 +155,17 @@ data_int_jairo = """
   var numero += 2;
 """
 data_test_jairo = """
-if (array.isEmpty) {
+if (numero > numerob) {
     return false;
   }
 
-  if (sequence.isEmpty) {
+  if (numero > numerob) {
     return true;
   }
   int arrayIndex = 0;
   int sequenceIndex = 0;
 
-  while (sequenceIndex < sequence.length && arrayIndex < array.length) {
+  while (sequenceIndex < sequence && arrayIndex < array) {
     if (sequence[sequenceIndex] == array[arrayIndex]) {
       sequenceIndex += 1;
     }
