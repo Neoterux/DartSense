@@ -61,6 +61,18 @@ def p_types(p):
   | BOOL
   '''
 
+def p_explicit_types(p):
+  ''' explicit_types : INTTYPE
+      | DOUBLETYPE
+      | STRINGTYPE
+      | HASHSETTYPE
+      | SETTYPE
+      | LINKEDHASHSETTYPE
+      | SPLAYTREESETTYPE
+      | BOOL
+      | record_shape
+  '''
+
 def p_typesVarProduction(p):
   '''typesVarProduction : types ID
   | types ID COMA typesVarProduction
@@ -77,6 +89,41 @@ def p_comparator(p):
   | LESS_THAN
   | LESS_THAN_EQUAL
   | EQUAL
+  '''
+
+def p_record_shape(p):
+  '''record_shape : LPAREN record_shape_def RPAREN
+    | LPAREN LCURLY_BRACKET record_shape_named_def RCURLY_BRACKET RPAREN
+  '''
+
+def p_record_shape_def(p):
+  ''' record_shape_def : explicit_types
+      | explicit_types COMA record_shape_def
+  '''
+def p_record_shape_named_def(p):
+  ''' record_shape_named_def : explicit_types ID
+      | explicit_types ID COMA record_shape_named_def
+  '''
+
+def p_empty(p):
+  'empty :'
+  pass
+
+def p_record_variable(p):
+  ''' codeLine : VAR ID EQUALS record DOTCOMA
+      | CONST ID EQUALS LPAREN record_content RPAREN DOTCOMA
+      | FINAL ID EQUALS LPAREN record_content RPAREN DOTCOMA
+      | record_shape ID EQUALS record DOTCOMA
+  '''
+def p_record(p):
+  ''' record : LPAREN record_content RPAREN'''
+
+def p_record_content(p):
+  ''' record_content : empty
+      | value
+      | value COMA record_content
+      | types COLON value
+      | types COLON value COMA record_content
   '''
 
 def p_error(p):
