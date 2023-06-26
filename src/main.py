@@ -1,190 +1,99 @@
-import ply.lex as lex
+import ply.yacc as yacc
+from lexico import tokens
 
-# Crear los tokens para la siguiente sintaxis
+def p_emptyList(p):
+  '''codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+  | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+  | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+  '''
 
-# Diccionario de palabras reservadas
-reserved = {
-    "while": "WHILE",
-    "if": "IF",
-    "true": "TRUE",
-    "false": "FALSE",
-    "bool": "BOOL",
-    "for": "FOR",
-    "return": "RETURN",
-    "print": "PRINT",
-    "int": "INTTYPE",
-    "var": "VAR",
-    "const": "CONST",
-    "final": "FINAL",
-    "List": "LIST",
-}
+def p_list(p):
+  'codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA'
 
-# Sequencia de tokens, puede ser lista o tupla
-tokens = (
-    "INT",
-    "PLUS",
-    "MINUS",
-    "TIMES",
-    "DIVIDE",
-    "LPAREN",
-    "RPAREN",
-    "LSBRACKET",
-    "RSBRACKET",
-    "LCURLY_BRACKET",
-    "RCURLY_BRACKET",
-    "ID",
-    "EQUALS",
-    "DOTCOMA",
-    "COMA",
-    "OBJTYPE",
-    "STR",
-    "DECREMENT_OPERATOR",
-    "INCREMENT_OPERATOR",
-    "INCREMENT_SELF_ASSIGN_OPERATOR",
-    "DECREMENT_SELF_ASSIGN_OPERATOR",
-    "METHOD",
-    "GREATER_THAN",
-    "GREATER_THAN_EQUAL",
-    "LESS_THAN",
-    "LESS_THAN_EQUAL",
-    "EQUAL",
-    "NOT_EQUAL",
-    "AND",
-    "COLON",
-    "RECORD_ARG",
-) + tuple(reserved.values())
+def p_ifStatement(p):
+  '''codeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+  | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+  | RCURLY_BRACKET
+  '''
 
-# Exp Regulares para tokens de símbolos
-t_DECREMENT_OPERATOR = r"--"
-t_INCREMENT_OPERATOR = r"\+\+"
-t_INCREMENT_SELF_ASSIGN_OPERATOR = r"\+="
-t_DECREMENT_SELF_ASSIGN_OPERATOR = r"\-="
-t_PLUS = r"\+"
-t_MINUS = r"-"
-t_TIMES = r"\*"
-t_DIVIDE = r"/"
-t_LPAREN = r"\("
-t_RPAREN = r"\)"
-t_LSBRACKET = r"\["
-t_RSBRACKET = r"\]"
-t_LCURLY_BRACKET = r"\{"
-t_RCURLY_BRACKET = r"\}"
-t_DOTCOMA = r";"
-t_COMA = r","
-t_EQUALS = r"="
-t_INT = r"-?\d+"
-t_OBJTYPE = r"<[\w]+>"
-t_STR = r"""(\"(?:[^\"\\]|\\.)*\")|(\'(?:[^\'\\]|\\.)*\')"""
-t_METHOD = r"\.[\w]*"
-t_GREATER_THAN = r">"
-t_GREATER_THAN_EQUAL = r"<="
-t_LESS_THAN = r"<"
-t_LESS_THAN_EQUAL = r"<="
-t_EQUAL = r"=="
-t_NOT_EQUAL = r"!="
-t_AND = r"&&"
-t_COLON = r":"
-t_RECORD_ARG = r"\$\d+"
+def p_elseStatement(p):
+  '''codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET
+  | IF LCURLY_BRACKET
+  '''
 
+def p_ifElseStatement(p):
+  '''codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+  | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+  '''
 
-# Para contabilizar nro de líneas
-def t_newline(t):
-    r"\n+"
-    t.lexer.lineno += len(t.value)
+def p_NamedParametersfunction(p):
+  '''codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+  | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+  '''
 
+def p_condition(p):
+  'condition : ID comparator ID'
 
-def t_ID(t):
-    r"[a-zA-Z_]+"
-    t.type = reserved.get(t.value, "ID")
-    return t
+def p_conditionProduction(p):
+  '''conditionProduction : condition
+  | condition logicalOperator conditionProduction
+  '''
 
+def p_values(p):
+  '''values : value
+  | value COMA values
+  '''
 
-# Ignorar lo que no sea un token en mi LP
-t_ignore = " \t"
+def p_value(p):
+  '''value : INT
+  | STR
+  | DOUBLE
+  | TRUE
+  | FALSE
+  '''
 
+def p_types(p):
+  '''types : VAR
+  | CONST
+  | FINAL
+  | VOID
+  | STATIC
+  | BOOL
+  '''
 
-def t_COMMENTS(t):
-    r"//.*"
-    pass
+def p_typesVarProduction(p):
+  '''typesVarProduction : types ID
+  | types ID COMA typesVarProduction
+  '''
 
+def p_logicalOperator(p):
+  '''logicalOperator : AND
+  | OR
+  '''
 
-# Presentación de errores léxicos
-def t_error(t):
-    print("Componente léxico no reconocido '%s'" % t.value[0])
-    t.lexer.skip(1)
+def p_comparator(p):
+  '''comparator : GREATER_THAN
+  | GREATER_THAN_EQUAL
+  | LESS_THAN
+  | LESS_THAN_EQUAL
+  | EQUAL
+  '''
 
+def p_error(p):
+    if p:
+         print("Error de sintaxis en token:", p.type)
+         #sintactico.errok()
+    else:
+         print("Syntax error at EOF")
 
-# Contruir analizador
-lexer = lex.lex()
+# Build the parser
+sintactico = yacc.yacc()
 
-# Testeando
-data_List_jairo = """
-  List<int> numeros = [];
-  List<String> nombres = List<String>();
-  List<double> decimales = List();
-  List<String> numeros = ["Hola", "Mundo", "!"];
-  List<int> numeros = [1, 2, 3];
-
-  var list = List.filled(3, 0);
-  print(list); // [0, 0, 0]
-  list[1] = 3;
-  print(list); // [0, 3, 0]
-"""
-
-data_int_jairo = """
-  --numero;
-  ++numero;
-  int numero = 1 - 2;
-  int numero = 1 + 2;
-  const numero = 123;
-  var numero = 12;
-  var numero -= 1;
-  var numero += 2;
-"""
-data_test_jairo = """
-if (array.isEmpty) {
-    return false;
-  }
-
-  if (sequence.isEmpty) {
-    return true;
-  }
-  int arrayIndex = 0;
-  int sequenceIndex = 0;
-
-  while (sequenceIndex < sequence.length && arrayIndex < array.length) {
-    if (sequence[sequenceIndex] == array[arrayIndex]) {
-      sequenceIndex += 1;
-    }
-    arrayIndex += 1;
-  }
-  return sequenceIndex == sequence.length;
-"""
-
-data_record_luis = """
-  var record = ('first', a: 2, b: true, 'last')
-  var record_alt = ({ a: 1, b: 'hola', c: (1, 2) })
-  var first = record.$1
-  var named = record.a
-  var xd = record.$3244
-  print(record) // ('first', a: 2, b: true, 'last')
-"""
-
-data_string_luis = """
-  var str = 'sfsdfsdf'
-  String str = "Hola mundo"
-  String complex = "This is 'hello' from your \\"world\\""
-"""
-
-# Datos de entrada
-# lexer.input(data_test_jairo)
-
-# lexer.input(data_record_luis)
-lexer.input(data_string_luis)
-
-# Tokenizador
 while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+   try:
+       s = input('dart > ')
+   except EOFError:
+       break
+   if not s: continue
+   result = sintactico.parse(s)
+   if result!=None: print(result)
