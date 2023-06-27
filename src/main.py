@@ -91,6 +91,28 @@ def p_comparator(p):
   | EQUAL
   '''
 
+#############################
+###   Variables/Symbols   ###
+#############################
+def p_declaration(p):
+    ''' codeLine : types ID EQUALS value DOTCOMA
+        | var_mods explicit_types ID DOTCOMA
+        | var_mods explicit_types NULLSAFE ID DOTCOMA
+        | LATE explicit_types nullsafe_mod ID DOTCOMA
+    '''
+
+def p_nullsafe_mod(p):
+    ''' nullsafe_mod : empty
+        | NULLSAFE
+    '''
+
+def p_var_mods(p):
+    ''' var_mods : empty
+        | FINAL
+        | CONST
+    '''
+
+## Record syntax definition
 def p_record_shape(p):
   '''record_shape : LPAREN record_shape_def RPAREN
     | LPAREN LCURLY_BRACKET record_shape_named_def RCURLY_BRACKET RPAREN
@@ -126,9 +148,40 @@ def p_record_content(p):
       | types COLON value COMA record_content
   '''
 
+################################
+###   While/do-while loops   ###
+################################
+def p_while (p):
+    ''' codeLine : WHILE LPAREN evaluable_condition RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    '''
+
+def p_do_while(p):
+    ''' codeLine : DO LCURLY_BRACKET RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
+        | DO LCURLY_BRACKET codeLine RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
+    '''
+
+def p_evaluable_condition(p):
+    ''' evaluable_condition : TRUE
+         | FALSE
+         | conditionProduction
+         | invoke
+         | NEG evaluable_condition
+         | NEG LPAREN evaluable_condition RPAREN
+    '''
+
+##########################################
+###   Function operators/definitions   ###
+##########################################
+def p_invoke(p):
+    ''' invoke : ID LPAREN values RPAREN
+        | ID LPAREN RPAREN
+        | ID METHOD LPAREN values RPAREN
+    '''
+
 def p_error(p):
     if p:
          print("Error de sintaxis en token:", p.type)
+         print(f'[DEBUG] info of p: {p}')
          #sintactico.errok()
     else:
          print("Syntax error at EOF")

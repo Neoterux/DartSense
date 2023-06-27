@@ -5,6 +5,7 @@ import ply.lex as lex
 # Diccionario de palabras reservadas
 reserved = {
     "while": "WHILE",
+    "do": "DO",
     "if": "IF",
     "else": "ELSE",
     "true": "TRUE",
@@ -17,6 +18,7 @@ reserved = {
     "var": "VAR",
     "const": "CONST",
     "final": "FINAL",
+    "late": "LATE",
     "void": "VOID",
     "static": "STATIC",
     "List": "LIST",
@@ -64,6 +66,8 @@ tokens = (
     "COLON",
     "RECORD_ARG",
     "DOUBLE",
+    "NEG",
+    "NULLSAFE",
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
@@ -99,6 +103,9 @@ t_OR = r"\|\|"
 t_COLON = r":"
 t_RECORD_ARG = r"\$\d+"
 t_DOUBLE = r'-?((\d*\.\d+)|(\d+(\.)))'
+t_NEG = r'!'
+#t_NULLSAFE = r'(?:[a-zA-Z_]+[a-zA-Z0-9]*)\?'
+t_NULLSAFE = r'\?'
 
 # Para contabilizar nro de líneas
 def t_newline(t):
@@ -190,9 +197,9 @@ data_string_luis = """
 """
 data_double_jose = """
   var numero = -2.653;
-  for( var i = 5. ; i >= 0.; i-- ) { 
-      numero += (i*.75) ; 
-   } 
+  for( var i = 5. ; i >= 0.; i-- ) {
+      numero += (i*.75) ;
+   }
 """
 
 data_set_jose = """
@@ -208,9 +215,9 @@ data_set_jose = """
 data_test_jose = """
   var valores = {-563.3, 230.3, .3, 1655., -166.};
   num total = 0;
-  for(var i = 0. ; i <= valores.lenght; i++ ) { 
-      total += i ; 
-  } 
+  for(var i = 0. ; i <= valores.lenght; i++ ) {
+      total += i ;
+  }
   print(total);
 """
 # Datos de entrada
