@@ -1,199 +1,233 @@
 import ply.yacc as yacc
 from lexico import tokens
 
+
 def p_emptyList(p):
-  '''codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-  | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-  | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
-  '''
+    """codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    """
+
 
 def p_list(p):
-  'codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA'
+    "codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA"
+
 
 def p_ifStatement(p):
-  '''codeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-  | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-  | RCURLY_BRACKET
-  '''
+    """codeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    | RCURLY_BRACKET
+    """
+
 
 def p_elseStatement(p):
-  '''codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET
-  | IF LCURLY_BRACKET
-  '''
+    """codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET
+    | IF LCURLY_BRACKET
+    """
+
 
 def p_ifElseStatement(p):
-  '''codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-  | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-  '''
+    """codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    """
+
 
 def p_NamedParametersfunction(p):
-  '''codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-  | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
-  '''
+    """codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    """
+
 
 def p_condition(p):
-  'condition : ID comparator ID'
+    "condition : ID comparator ID"
+
 
 def p_conditionProduction(p):
-  '''conditionProduction : condition
-  | condition logicalOperator conditionProduction
-  '''
+    """conditionProduction : condition
+    | condition logicalOperator conditionProduction
+    """
+
 
 def p_values(p):
-  '''values : value
-  | value COMA values
-  '''
+    """values : value
+    | value COMA values
+    """
+
 
 def p_value(p):
-  '''value : INT
-  | STR
-  | DOUBLE
-  | TRUE
-  | FALSE
-  '''
+    """value : INT
+    | STR
+    | DOUBLE
+    | TRUE
+    | FALSE
+    """
+
 
 def p_types(p):
-  '''types : VAR
-  | CONST
-  | FINAL
-  | VOID
-  | STATIC
-  | BOOL
-  '''
+    """types : VAR
+    | CONST
+    | FINAL
+    | VOID
+    | STATIC
+    | BOOL
+    """
+
 
 def p_explicit_types(p):
-  ''' explicit_types : INTTYPE
-      | DOUBLETYPE
-      | STRINGTYPE
-      | HASHSETTYPE
-      | SETTYPE
-      | LINKEDHASHSETTYPE
-      | SPLAYTREESETTYPE
-      | BOOL
-      | record_shape
-  '''
+    """explicit_types : INTTYPE
+    | DOUBLETYPE
+    | STRINGTYPE
+    | HASHSETTYPE
+    | SETTYPE
+    | LINKEDHASHSETTYPE
+    | SPLAYTREESETTYPE
+    | BOOL
+    | record_shape
+    """
+
 
 def p_typesVarProduction(p):
-  '''typesVarProduction : types ID
-  | types ID COMA typesVarProduction
-  '''
+    """typesVarProduction : types ID
+    | types ID COMA typesVarProduction
+    """
+
 
 def p_logicalOperator(p):
-  '''logicalOperator : AND
-  | OR
-  '''
+    """logicalOperator : AND
+    | OR
+    """
+
 
 def p_comparator(p):
-  '''comparator : GREATER_THAN
-  | GREATER_THAN_EQUAL
-  | LESS_THAN
-  | LESS_THAN_EQUAL
-  | EQUAL
-  '''
+    """comparator : GREATER_THAN
+    | GREATER_THAN_EQUAL
+    | LESS_THAN
+    | LESS_THAN_EQUAL
+    | EQUAL
+    """
+
 
 #############################
 ###   Variables/Symbols   ###
 #############################
 def p_declaration(p):
-    ''' codeLine : types ID EQUALS value DOTCOMA
-        | var_mods explicit_types ID DOTCOMA
-        | var_mods explicit_types NULLSAFE ID DOTCOMA
-        | LATE explicit_types nullsafe_mod ID DOTCOMA
-    '''
+    """codeLine : types ID EQUALS value DOTCOMA
+    | var_mods explicit_types ID DOTCOMA
+    | var_mods explicit_types NULLSAFE ID DOTCOMA
+    | LATE explicit_types nullsafe_mod ID DOTCOMA
+    """
+
 
 def p_nullsafe_mod(p):
-    ''' nullsafe_mod : empty
-        | NULLSAFE
-    '''
+    """nullsafe_mod : empty
+    | NULLSAFE
+    """
+
 
 def p_var_mods(p):
-    ''' var_mods : empty
-        | FINAL
-        | CONST
-    '''
+    """var_mods : empty
+    | FINAL
+    | CONST
+    """
+
 
 ## Record syntax definition
 def p_record_shape(p):
-  '''record_shape : LPAREN record_shape_def RPAREN
+    """record_shape : LPAREN record_shape_def RPAREN
     | LPAREN LCURLY_BRACKET record_shape_named_def RCURLY_BRACKET RPAREN
-  '''
+    """
+
 
 def p_record_shape_def(p):
-  ''' record_shape_def : explicit_types
-      | explicit_types COMA record_shape_def
-  '''
+    """record_shape_def : explicit_types
+    | explicit_types COMA record_shape_def
+    """
+
+
 def p_record_shape_named_def(p):
-  ''' record_shape_named_def : explicit_types ID
-      | explicit_types ID COMA record_shape_named_def
-  '''
+    """record_shape_named_def : explicit_types ID
+    | explicit_types ID COMA record_shape_named_def
+    """
+
 
 def p_empty(p):
-  'empty :'
-  pass
+    "empty :"
+    pass
+
 
 def p_record_variable(p):
-  ''' codeLine : VAR ID EQUALS record DOTCOMA
-      | CONST ID EQUALS LPAREN record_content RPAREN DOTCOMA
-      | FINAL ID EQUALS LPAREN record_content RPAREN DOTCOMA
-      | record_shape ID EQUALS record DOTCOMA
-  '''
+    """codeLine : VAR ID EQUALS record DOTCOMA
+    | CONST ID EQUALS LPAREN record_content RPAREN DOTCOMA
+    | FINAL ID EQUALS LPAREN record_content RPAREN DOTCOMA
+    | record_shape ID EQUALS record DOTCOMA
+    """
+
+
 def p_record(p):
-  ''' record : LPAREN record_content RPAREN'''
+    """record : LPAREN record_content RPAREN"""
+
 
 def p_record_content(p):
-  ''' record_content : empty
-      | value
-      | value COMA record_content
-      | types COLON value
-      | types COLON value COMA record_content
-  '''
+    """record_content : empty
+    | value
+    | value COMA record_content
+    | types COLON value
+    | types COLON value COMA record_content
+    """
+
 
 ################################
 ###   While/do-while loops   ###
 ################################
-def p_while (p):
-    ''' codeLine : WHILE LPAREN evaluable_condition RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    '''
+def p_while(p):
+    """codeLine : WHILE LPAREN evaluable_condition RPAREN LCURLY_BRACKET RCURLY_BRACKET"""
+
 
 def p_do_while(p):
-    ''' codeLine : DO LCURLY_BRACKET RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
-        | DO LCURLY_BRACKET codeLine RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
-    '''
+    """codeLine : DO LCURLY_BRACKET RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
+    | DO LCURLY_BRACKET codeLine RCURLY_BRACKET WHILE LPAREN evaluable_condition RPAREN DOTCOMA
+    """
+
 
 def p_evaluable_condition(p):
-    ''' evaluable_condition : TRUE
-         | FALSE
-         | conditionProduction
-         | invoke
-         | NEG evaluable_condition
-         | NEG LPAREN evaluable_condition RPAREN
-    '''
+    """evaluable_condition : TRUE
+    | FALSE
+    | conditionProduction
+    | invoke
+    | NEG evaluable_condition
+    | NEG LPAREN evaluable_condition RPAREN
+    """
+
 
 ##########################################
 ###   Function operators/definitions   ###
 ##########################################
 def p_invoke(p):
-    ''' invoke : ID LPAREN values RPAREN
-        | ID LPAREN RPAREN
-        | ID METHOD LPAREN values RPAREN
-    '''
+    """invoke : ID LPAREN values RPAREN
+    | ID LPAREN RPAREN
+    | ID METHOD LPAREN values RPAREN
+    """
+
 
 def p_error(p):
     if p:
-         print("Error de sintaxis en token:", p.type)
-         print(f'[DEBUG] info of p: {p}')
-         #sintactico.errok()
+        print("Error de sintaxis en token:", p.type)
+        # print(f'[DEBUG] info of p: {p}')
+        # sintactico.errok()
     else:
-         print("Syntax error at EOF")
+        print("Syntax error at EOF")
+
 
 # Build the parser
 sintactico = yacc.yacc()
 
 while True:
-   try:
-       s = input('dart > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = sintactico.parse(s)
-   if result!=None: print(result)
+    try:
+        s = input("dart > ")
+    except EOFError:
+        break
+    if not s:
+        continue
+    result = sintactico.parse(s)
+    if result != None:
+        print(result)
