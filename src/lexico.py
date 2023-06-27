@@ -26,7 +26,8 @@ reserved = {
     'HashSet': "HASHSETTYPE",
     'Set': "SETTYPE",
     'LinkedHashSet': "LINKEDHASHSETTYPE",
-    'SplayTreeSet': "SPLAYTREESETTYPE"
+    'SplayTreeSet': "SPLAYTREESETTYPE",
+    'required': "REQUIRED"
 }
 
 # Sequencia de tokens, puede ser lista o tupla
@@ -64,6 +65,7 @@ tokens = (
     "COLON",
     "RECORD_ARG",
     "DOUBLE",
+    "CLOSEQUESTIONMARK",
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
@@ -99,6 +101,7 @@ t_OR = r"\|\|"
 t_COLON = r":"
 t_RECORD_ARG = r"\$\d+"
 t_DOUBLE = r'-?((\d*\.\d+)|(\d+(\.)))'
+t_CLOSEQUESTIONMARK = r'\?'
 
 # Para contabilizar nro de líneas
 def t_newline(t):
@@ -221,7 +224,7 @@ data_test_jose = """
 
 # lexer.input(data_double_jose)
 # lexer.input(data_set_jose)
-lexer.input(data_test_jairo)
+lexer.input(data_int_jairo)
 
 # Tokenizador
 while True:

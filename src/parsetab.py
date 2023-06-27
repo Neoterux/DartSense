@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND BOOL COLON COMA CONST DECREMENT_OPERATOR DECREMENT_SELF_ASSIGN_OPERATOR DIVIDE DOTCOMA DOUBLE DOUBLETYPE ELSE EQUAL EQUALS FALSE FINAL FOR GREATER_THAN GREATER_THAN_EQUAL HASHSETTYPE ID IF INCREMENT_OPERATOR INCREMENT_SELF_ASSIGN_OPERATOR INT INTTYPE LCURLY_BRACKET LESS_THAN LESS_THAN_EQUAL LINKEDHASHSETTYPE LIST LPAREN LSBRACKET METHOD MINUS NOT_EQUAL NUM OBJTYPE OR PLUS PRINT RCURLY_BRACKET RECORD_ARG RETURN RPAREN RSBRACKET SETTYPE SPLAYTREESETTYPE STATIC STR STRINGTYPE TIMES TRUE VAR VOID WHILEcodeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA\n  | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA\n  | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA\n  codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMAcodeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET\n  | RCURLY_BRACKET\n  codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET\n  | IF LCURLY_BRACKET\n  codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET\n  codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET\n  condition : ID comparator IDconditionProduction : condition\n  | condition logicalOperator conditionProduction\n  values : value\n  | value COMA values\n  value : INT\n  | STR\n  | DOUBLE\n  | TRUE\n  | FALSE\n  types : VAR\n  | CONST\n  | FINAL\n  | VOID\n  | STATIC\n  | BOOL\n  typesVarProduction : types ID\n  | types ID COMA typesVarProduction\n  logicalOperator : AND\n  | OR\n  comparator : GREATER_THAN\n  | GREATER_THAN_EQUAL\n  | LESS_THAN\n  | LESS_THAN_EQUAL\n  | EQUAL\n  '
+_lr_signature = 'AND BOOL COLON COMA CONST DECREMENT_OPERATOR DECREMENT_SELF_ASSIGN_OPERATOR DIVIDE DOTCOMA DOUBLE DOUBLETYPE ELSE EQUAL EQUALS FALSE FINAL FOR GREATER_THAN GREATER_THAN_EQUAL HASHSETTYPE ID IF INCREMENT_OPERATOR INCREMENT_SELF_ASSIGN_OPERATOR INT INTTYPE LCURLY_BRACKET LESS_THAN LESS_THAN_EQUAL LINKEDHASHSETTYPE LIST LPAREN LSBRACKET METHOD MINUS NOT_EQUAL NUM OBJTYPE OR PLUS PRINT RCURLY_BRACKET RECORD_ARG RETURN RPAREN RSBRACKET SETTYPE SPLAYTREESETTYPE STATIC STR STRINGTYPE TIMES TRUE VAR VOID WHILE codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation  RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET\n   operation : ID DECREMENT_OPERATOR\n  | DECREMENT_OPERATOR ID\n  | INCREMENT_OPERATOR ID\n  | ID INCREMENT_OPERATOR\n  | ID operator ID\n  | ID operator numericValue\n  | numericValue operator ID\n   operator : PLUS\n  | MINUS\n  | TIMES\n  | DIVIDE\n  codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA\n  | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA\n  codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA\n  | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA\n  setTypes : SETTYPE\n  | HASHSETTYPE\n  | LINKEDHASHSETTYPE\n  | SPLAYTREESETTYPE\n  codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA\n  | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA\n  | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA\n  codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMAcodeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET\n  | RCURLY_BRACKET\n  codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET\n  | IF LCURLY_BRACKET\n  codeLine : ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET\n  codeLine : types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET\n  | types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET\n  condition : ID comparator IDconditionProduction : condition\n  | condition logicalOperator conditionProduction\n  values : value\n  | value COMA values\n  value : numericValue\n  | STR\n  | TRUE\n  | FALSE\n  numericValue : INT\n  | DOUBLE\n  types : VAR\n  | CONST\n  | FINAL\n  | VOID\n  | STATIC\n  | BOOL\n  typesVarProduction : types ID\n  | types ID COMA typesVarProduction\n  typesVarAsignation : types ID EQUALS value DOTCOMA\n  logicalOperator : AND\n  | OR\n  comparator : GREATER_THAN\n  | GREATER_THAN_EQUAL\n  | LESS_THAN\n  | LESS_THAN_EQUAL\n  | EQUAL\n  '
     
-_lr_action_items = {'LIST':([0,26,],[2,39,]),'IF':([0,5,],[3,17,]),'RCURLY_BRACKET':([0,16,41,46,58,59,73,74,],[4,23,57,60,66,-30,-31,76,]),'ELSE':([0,],[5,]),'VAR':([0,38,67,],[7,7,7,]),'CONST':([0,38,67,],[8,8,8,]),'FINAL':([0,38,67,],[9,9,9,]),'VOID':([0,38,67,],[10,10,10,]),'STATIC':([0,38,67,],[11,11,11,]),'BOOL':([0,38,67,],[12,12,12,]),'$end':([1,4,15,23,41,57,58,63,66,70,71,74,75,76,],[0,-7,-9,-8,-6,-5,-11,-1,-10,-3,-4,-13,-2,-12,]),'OBJTYPE':([2,39,],[13,47,]),'LPAREN':([3,17,18,39,47,],[14,24,25,48,61,]),'LCURLY_BRACKET':([3,5,25,27,44,68,],[15,16,38,41,58,74,]),'ID':([6,7,8,9,10,11,12,13,14,24,28,29,30,31,32,33,34,35,36,45,],[18,-24,-25,-26,-27,-28,-29,19,22,22,22,-32,-33,43,-34,-35,-36,-37,-38,59,]),'EQUALS':([19,],[26,]),'RPAREN':([20,21,37,42,43,48,60,61,],[27,-15,44,-16,-14,62,68,69,]),'AND':([21,43,],[29,-14,]),'OR':([21,43,],[30,-14,]),'GREATER_THAN':([22,],[32,]),'GREATER_THAN_EQUAL':([22,],[33,]),'LESS_THAN':([22,],[34,]),'LESS_THAN_EQUAL':([22,],[35,]),'EQUAL':([22,],[36,]),'LSBRACKET':([26,],[40,]),'RSBRACKET':([40,50,51,52,53,54,55,56,72,],[49,64,-17,-19,-20,-21,-22,-23,-18,]),'INT':([40,65,],[52,52,]),'STR':([40,65,],[53,53,]),'DOUBLE':([40,65,],[54,54,]),'TRUE':([40,65,],[55,55,]),'FALSE':([40,65,],[56,56,]),'DOTCOMA':([49,62,64,69,],[63,70,71,75,]),'COMA':([51,52,53,54,55,56,59,],[65,-19,-20,-21,-22,-23,67,]),}
+_lr_action_items = {'FOR':([0,114,],[2,2,]),'VAR':([0,19,56,112,114,],[4,30,30,30,4,]),'LIST':([0,44,114,],[6,61,6,]),'IF':([0,8,114,],[7,26,7,]),'RCURLY_BRACKET':([0,3,24,25,37,63,68,74,75,77,78,79,80,87,88,89,90,104,105,108,111,114,119,121,123,124,125,126,127,128,129,131,133,134,135,136,137,],[3,-27,-29,37,-28,88,91,-43,-44,-39,-40,-41,-42,-37,-25,111,-51,118,120,-21,-30,3,130,132,-23,-24,-38,-52,134,135,-13,-14,-22,-32,-1,-15,-16,]),'ELSE':([0,114,],[8,8,]),'SETTYPE':([0,114,],[10,10,]),'HASHSETTYPE':([0,114,],[11,11,]),'LINKEDHASHSETTYPE':([0,114,],[12,12,]),'SPLAYTREESETTYPE':([0,114,],[13,13,]),'CONST':([0,19,56,112,114,],[14,14,14,14,14,]),'FINAL':([0,19,56,112,114,],[15,15,15,15,15,]),'VOID':([0,19,56,112,114,],[16,16,16,16,16,]),'STATIC':([0,19,56,112,114,],[17,17,17,17,17,]),'BOOL':([0,19,56,112,114,],[18,18,18,18,18,]),'$end':([1,3,24,37,63,88,89,108,111,123,124,127,129,131,133,134,135,136,137,],[0,-27,-29,-28,-26,-25,-31,-21,-30,-23,-24,-33,-13,-14,-22,-32,-1,-15,-16,]),'LPAREN':([2,7,26,27,61,83,],[19,23,38,39,84,106,]),'ID':([4,9,14,15,16,17,18,22,23,28,29,30,38,43,46,47,48,49,50,51,52,53,54,57,67,71,72,95,96,97,98,99,102,103,],[20,27,-46,-47,-48,-49,-50,33,36,36,41,-45,36,60,36,-54,-55,65,-56,-57,-58,-59,-60,70,90,100,101,115,-9,-10,-11,-12,117,-53,]),'LESS_THAN':([5,10,11,12,13,31,36,],[21,-17,-18,-19,-20,42,52,]),'OBJTYPE':([6,21,42,61,],[22,32,59,83,]),'LCURLY_BRACKET':([7,8,39,45,66,81,82,92,113,],[24,25,56,63,89,104,105,114,127,]),'EQUALS':([20,33,41,60,],[31,44,58,82,]),'GREATER_THAN':([32,36,59,],[43,50,81,]),'RPAREN':([34,35,55,64,65,69,74,75,84,91,93,94,100,101,106,115,116,117,],[45,-35,66,-36,-34,92,-43,-44,107,113,-2,-5,-3,-4,122,-6,-7,-8,]),'DOTCOMA':([35,40,64,65,74,75,76,77,78,79,80,85,107,109,118,120,122,130,132,],[-35,57,-36,-34,-43,-44,103,-39,-40,-41,-42,108,123,124,129,131,133,136,137,]),'AND':([35,65,],[47,-34,]),'OR':([35,65,],[48,-34,]),'GREATER_THAN_EQUAL':([36,],[51,]),'LESS_THAN_EQUAL':([36,],[53,]),'EQUAL':([36,],[54,]),'LSBRACKET':([44,],[62,]),'DECREMENT_OPERATOR':([57,70,],[71,93,]),'INCREMENT_OPERATOR':([57,70,],[72,94,]),'INT':([57,58,62,95,96,97,98,99,104,105,110,],[74,74,74,74,-9,-10,-11,-12,74,74,74,]),'DOUBLE':([57,58,62,95,96,97,98,99,104,105,110,],[75,75,75,75,-9,-10,-11,-12,75,75,75,]),'STR':([58,62,104,105,110,],[78,78,78,78,78,]),'TRUE':([58,62,104,105,110,],[79,79,79,79,79,]),'FALSE':([58,62,104,105,110,],[80,80,80,80,80,]),'RSBRACKET':([62,74,75,77,78,79,80,86,87,125,],[85,-43,-44,-39,-40,-41,-42,109,-37,-38,]),'PLUS':([70,73,74,75,],[96,96,-43,-44,]),'MINUS':([70,73,74,75,],[97,97,-43,-44,]),'TIMES':([70,73,74,75,],[98,98,-43,-44,]),'DIVIDE':([70,73,74,75,],[99,99,-43,-44,]),'COMA':([74,75,77,78,79,80,87,90,],[-43,-44,-39,-40,-41,-42,110,112,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'codeLine':([0,],[1,]),'types':([0,38,67,],[6,45,45,]),'conditionProduction':([14,24,28,],[20,37,42,]),'condition':([14,24,28,],[21,21,21,]),'logicalOperator':([21,],[28,]),'comparator':([22,],[31,]),'typesVarProduction':([38,67,],[46,73,]),'values':([40,65,],[50,72,]),'value':([40,65,],[51,51,]),}
+_lr_goto_items = {'codeLine':([0,114,],[1,128,]),'setTypes':([0,114,],[5,5,]),'types':([0,19,56,112,114,],[9,29,67,67,9,]),'typesVarAsignation':([19,],[28,]),'conditionProduction':([23,28,38,46,],[34,40,55,64,]),'condition':([23,28,38,46,],[35,35,35,35,]),'logicalOperator':([35,],[46,]),'comparator':([36,],[49,]),'typesVarProduction':([56,112,],[68,126,]),'operation':([57,],[69,]),'numericValue':([57,58,62,95,104,105,110,],[73,77,77,116,77,77,77,]),'value':([58,62,104,105,110,],[76,87,87,87,87,]),'values':([62,104,105,110,],[86,119,121,125,]),'operator':([70,73,],[95,102,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,42 +27,64 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> codeLine","S'",1,None,None,None),
-  ('codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA','codeLine',7,'p_emptyList','main.py',5),
-  ('codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA','codeLine',9,'p_emptyList','main.py',6),
-  ('codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA','codeLine',8,'p_emptyList','main.py',7),
-  ('codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA','codeLine',8,'p_list','main.py',11),
-  ('codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',6,'p_ifStatement','main.py',14),
-  ('codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET','codeLine',5,'p_ifStatement','main.py',15),
-  ('codeLine -> RCURLY_BRACKET','codeLine',1,'p_ifStatement','main.py',16),
-  ('codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET','codeLine',3,'p_elseStatement','main.py',20),
-  ('codeLine -> IF LCURLY_BRACKET','codeLine',2,'p_elseStatement','main.py',21),
-  ('codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',7,'p_ifElseStatement','main.py',25),
-  ('codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET','codeLine',6,'p_ifElseStatement','main.py',26),
-  ('codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',9,'p_NamedParametersfunction','main.py',30),
-  ('codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET','codeLine',8,'p_NamedParametersfunction','main.py',31),
-  ('condition -> ID comparator ID','condition',3,'p_condition','main.py',35),
-  ('conditionProduction -> condition','conditionProduction',1,'p_conditionProduction','main.py',38),
-  ('conditionProduction -> condition logicalOperator conditionProduction','conditionProduction',3,'p_conditionProduction','main.py',39),
-  ('values -> value','values',1,'p_values','main.py',43),
-  ('values -> value COMA values','values',3,'p_values','main.py',44),
-  ('value -> INT','value',1,'p_value','main.py',48),
-  ('value -> STR','value',1,'p_value','main.py',49),
-  ('value -> DOUBLE','value',1,'p_value','main.py',50),
-  ('value -> TRUE','value',1,'p_value','main.py',51),
-  ('value -> FALSE','value',1,'p_value','main.py',52),
-  ('types -> VAR','types',1,'p_types','main.py',56),
-  ('types -> CONST','types',1,'p_types','main.py',57),
-  ('types -> FINAL','types',1,'p_types','main.py',58),
-  ('types -> VOID','types',1,'p_types','main.py',59),
-  ('types -> STATIC','types',1,'p_types','main.py',60),
-  ('types -> BOOL','types',1,'p_types','main.py',61),
-  ('typesVarProduction -> types ID','typesVarProduction',2,'p_typesVarProduction','main.py',65),
-  ('typesVarProduction -> types ID COMA typesVarProduction','typesVarProduction',4,'p_typesVarProduction','main.py',66),
-  ('logicalOperator -> AND','logicalOperator',1,'p_logicalOperator','main.py',70),
-  ('logicalOperator -> OR','logicalOperator',1,'p_logicalOperator','main.py',71),
-  ('comparator -> GREATER_THAN','comparator',1,'p_comparator','main.py',75),
-  ('comparator -> GREATER_THAN_EQUAL','comparator',1,'p_comparator','main.py',76),
-  ('comparator -> LESS_THAN','comparator',1,'p_comparator','main.py',77),
-  ('comparator -> LESS_THAN_EQUAL','comparator',1,'p_comparator','main.py',78),
-  ('comparator -> EQUAL','comparator',1,'p_comparator','main.py',79),
+  ('codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET','codeLine',10,'p_forBucle','main.py',5),
+  ('operation -> ID DECREMENT_OPERATOR','operation',2,'p_operation','main.py',9),
+  ('operation -> DECREMENT_OPERATOR ID','operation',2,'p_operation','main.py',10),
+  ('operation -> INCREMENT_OPERATOR ID','operation',2,'p_operation','main.py',11),
+  ('operation -> ID INCREMENT_OPERATOR','operation',2,'p_operation','main.py',12),
+  ('operation -> ID operator ID','operation',3,'p_operation','main.py',13),
+  ('operation -> ID operator numericValue','operation',3,'p_operation','main.py',14),
+  ('operation -> numericValue operator ID','operation',3,'p_operation','main.py',15),
+  ('operator -> PLUS','operator',1,'p_operator','main.py',19),
+  ('operator -> MINUS','operator',1,'p_operator','main.py',20),
+  ('operator -> TIMES','operator',1,'p_operator','main.py',21),
+  ('operator -> DIVIDE','operator',1,'p_operator','main.py',22),
+  ('codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA','codeLine',9,'p_emptySet','main.py',26),
+  ('codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA','codeLine',9,'p_emptySet','main.py',27),
+  ('codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA','codeLine',10,'p_set','main.py',31),
+  ('codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA','codeLine',10,'p_set','main.py',32),
+  ('setTypes -> SETTYPE','setTypes',1,'p_setTypes','main.py',36),
+  ('setTypes -> HASHSETTYPE','setTypes',1,'p_setTypes','main.py',37),
+  ('setTypes -> LINKEDHASHSETTYPE','setTypes',1,'p_setTypes','main.py',38),
+  ('setTypes -> SPLAYTREESETTYPE','setTypes',1,'p_setTypes','main.py',39),
+  ('codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA','codeLine',7,'p_emptyList','main.py',43),
+  ('codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA','codeLine',9,'p_emptyList','main.py',44),
+  ('codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA','codeLine',8,'p_emptyList','main.py',45),
+  ('codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA','codeLine',8,'p_list','main.py',49),
+  ('codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',6,'p_ifStatement','main.py',52),
+  ('codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET','codeLine',5,'p_ifStatement','main.py',53),
+  ('codeLine -> RCURLY_BRACKET','codeLine',1,'p_ifStatement','main.py',54),
+  ('codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET','codeLine',3,'p_elseStatement','main.py',58),
+  ('codeLine -> IF LCURLY_BRACKET','codeLine',2,'p_elseStatement','main.py',59),
+  ('codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',7,'p_ifElseStatement','main.py',63),
+  ('codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET','codeLine',6,'p_ifElseStatement','main.py',64),
+  ('codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET','codeLine',9,'p_NamedParametersfunction','main.py',68),
+  ('codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET','codeLine',8,'p_NamedParametersfunction','main.py',69),
+  ('condition -> ID comparator ID','condition',3,'p_condition','main.py',73),
+  ('conditionProduction -> condition','conditionProduction',1,'p_conditionProduction','main.py',76),
+  ('conditionProduction -> condition logicalOperator conditionProduction','conditionProduction',3,'p_conditionProduction','main.py',77),
+  ('values -> value','values',1,'p_values','main.py',81),
+  ('values -> value COMA values','values',3,'p_values','main.py',82),
+  ('value -> numericValue','value',1,'p_value','main.py',86),
+  ('value -> STR','value',1,'p_value','main.py',87),
+  ('value -> TRUE','value',1,'p_value','main.py',88),
+  ('value -> FALSE','value',1,'p_value','main.py',89),
+  ('numericValue -> INT','numericValue',1,'p_numericValue','main.py',93),
+  ('numericValue -> DOUBLE','numericValue',1,'p_numericValue','main.py',94),
+  ('types -> VAR','types',1,'p_types','main.py',98),
+  ('types -> CONST','types',1,'p_types','main.py',99),
+  ('types -> FINAL','types',1,'p_types','main.py',100),
+  ('types -> VOID','types',1,'p_types','main.py',101),
+  ('types -> STATIC','types',1,'p_types','main.py',102),
+  ('types -> BOOL','types',1,'p_types','main.py',103),
+  ('typesVarProduction -> types ID','typesVarProduction',2,'p_typesVarProduction','main.py',107),
+  ('typesVarProduction -> types ID COMA typesVarProduction','typesVarProduction',4,'p_typesVarProduction','main.py',108),
+  ('typesVarAsignation -> types ID EQUALS value DOTCOMA','typesVarAsignation',5,'p_typesVarAsignation','main.py',112),
+  ('logicalOperator -> AND','logicalOperator',1,'p_logicalOperator','main.py',116),
+  ('logicalOperator -> OR','logicalOperator',1,'p_logicalOperator','main.py',117),
+  ('comparator -> GREATER_THAN','comparator',1,'p_comparator','main.py',121),
+  ('comparator -> GREATER_THAN_EQUAL','comparator',1,'p_comparator','main.py',122),
+  ('comparator -> LESS_THAN','comparator',1,'p_comparator','main.py',123),
+  ('comparator -> LESS_THAN_EQUAL','comparator',1,'p_comparator','main.py',124),
+  ('comparator -> EQUAL','comparator',1,'p_comparator','main.py',125),
 ]

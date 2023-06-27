@@ -3,182 +3,213 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     COLON
-    DECREMENT_OPERATOR
     DECREMENT_SELF_ASSIGN_OPERATOR
-    DIVIDE
     DOUBLETYPE
-    FOR
-    HASHSETTYPE
-    INCREMENT_OPERATOR
     INCREMENT_SELF_ASSIGN_OPERATOR
     INTTYPE
-    LINKEDHASHSETTYPE
     METHOD
-    MINUS
     NOT_EQUAL
     NUM
-    PLUS
     PRINT
     RECORD_ARG
     RETURN
-    SETTYPE
-    SPLAYTREESETTYPE
     STRINGTYPE
-    TIMES
     WHILE
 
 Grammar
 
 Rule 0     S' -> codeLine
-Rule 1     codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-Rule 2     codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-Rule 3     codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
-Rule 4     codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
-Rule 5     codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-Rule 6     codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-Rule 7     codeLine -> RCURLY_BRACKET
-Rule 8     codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET
-Rule 9     codeLine -> IF LCURLY_BRACKET
-Rule 10    codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-Rule 11    codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-Rule 12    codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-Rule 13    codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
-Rule 14    condition -> ID comparator ID
-Rule 15    conditionProduction -> condition
-Rule 16    conditionProduction -> condition logicalOperator conditionProduction
-Rule 17    values -> value
-Rule 18    values -> value COMA values
-Rule 19    value -> INT
-Rule 20    value -> STR
-Rule 21    value -> DOUBLE
-Rule 22    value -> TRUE
-Rule 23    value -> FALSE
-Rule 24    types -> VAR
-Rule 25    types -> CONST
-Rule 26    types -> FINAL
-Rule 27    types -> VOID
-Rule 28    types -> STATIC
-Rule 29    types -> BOOL
-Rule 30    typesVarProduction -> types ID
-Rule 31    typesVarProduction -> types ID COMA typesVarProduction
-Rule 32    logicalOperator -> AND
-Rule 33    logicalOperator -> OR
-Rule 34    comparator -> GREATER_THAN
-Rule 35    comparator -> GREATER_THAN_EQUAL
-Rule 36    comparator -> LESS_THAN
-Rule 37    comparator -> LESS_THAN_EQUAL
-Rule 38    comparator -> EQUAL
+Rule 1     codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+Rule 2     operation -> ID DECREMENT_OPERATOR
+Rule 3     operation -> DECREMENT_OPERATOR ID
+Rule 4     operation -> INCREMENT_OPERATOR ID
+Rule 5     operation -> ID INCREMENT_OPERATOR
+Rule 6     operation -> ID operator ID
+Rule 7     operation -> ID operator numericValue
+Rule 8     operation -> numericValue operator ID
+Rule 9     operator -> PLUS
+Rule 10    operator -> MINUS
+Rule 11    operator -> TIMES
+Rule 12    operator -> DIVIDE
+Rule 13    codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+Rule 14    codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+Rule 15    codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+Rule 16    codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+Rule 17    setTypes -> SETTYPE
+Rule 18    setTypes -> HASHSETTYPE
+Rule 19    setTypes -> LINKEDHASHSETTYPE
+Rule 20    setTypes -> SPLAYTREESETTYPE
+Rule 21    codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+Rule 22    codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+Rule 23    codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+Rule 24    codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
+Rule 25    codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+Rule 26    codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+Rule 27    codeLine -> RCURLY_BRACKET
+Rule 28    codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET
+Rule 29    codeLine -> IF LCURLY_BRACKET
+Rule 30    codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+Rule 31    codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+Rule 32    codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+Rule 33    codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+Rule 34    condition -> ID comparator ID
+Rule 35    conditionProduction -> condition
+Rule 36    conditionProduction -> condition logicalOperator conditionProduction
+Rule 37    values -> value
+Rule 38    values -> value COMA values
+Rule 39    value -> numericValue
+Rule 40    value -> STR
+Rule 41    value -> TRUE
+Rule 42    value -> FALSE
+Rule 43    numericValue -> INT
+Rule 44    numericValue -> DOUBLE
+Rule 45    types -> VAR
+Rule 46    types -> CONST
+Rule 47    types -> FINAL
+Rule 48    types -> VOID
+Rule 49    types -> STATIC
+Rule 50    types -> BOOL
+Rule 51    typesVarProduction -> types ID
+Rule 52    typesVarProduction -> types ID COMA typesVarProduction
+Rule 53    typesVarAsignation -> types ID EQUALS value DOTCOMA
+Rule 54    logicalOperator -> AND
+Rule 55    logicalOperator -> OR
+Rule 56    comparator -> GREATER_THAN
+Rule 57    comparator -> GREATER_THAN_EQUAL
+Rule 58    comparator -> LESS_THAN
+Rule 59    comparator -> LESS_THAN_EQUAL
+Rule 60    comparator -> EQUAL
 
 Terminals, with rules where they appear
 
-AND                  : 32
-BOOL                 : 29
+AND                  : 54
+BOOL                 : 50
 COLON                : 
-COMA                 : 18 31
-CONST                : 25
-DECREMENT_OPERATOR   : 
+COMA                 : 38 52
+CONST                : 46
+DECREMENT_OPERATOR   : 2 3
 DECREMENT_SELF_ASSIGN_OPERATOR : 
-DIVIDE               : 
-DOTCOMA              : 1 2 3 4
-DOUBLE               : 21
+DIVIDE               : 12
+DOTCOMA              : 1 13 14 15 16 21 22 23 24 53
+DOUBLE               : 44
 DOUBLETYPE           : 
-ELSE                 : 8 10 11
-EQUAL                : 38
-EQUALS               : 1 2 3 4
-FALSE                : 23
-FINAL                : 26
-FOR                  : 
-GREATER_THAN         : 34
-GREATER_THAN_EQUAL   : 35
-HASHSETTYPE          : 
-ID                   : 1 2 3 4 12 13 14 14 30 31
-IF                   : 5 6 9 10 11
-INCREMENT_OPERATOR   : 
+ELSE                 : 28 30 31
+EQUAL                : 60
+EQUALS               : 13 14 15 16 21 22 23 24 53
+FALSE                : 42
+FINAL                : 47
+FOR                  : 1
+GREATER_THAN         : 13 14 15 16 56
+GREATER_THAN_EQUAL   : 57
+HASHSETTYPE          : 18
+ID                   : 2 3 4 5 6 6 7 8 13 14 15 16 21 22 23 24 32 33 34 34 51 52 53
+IF                   : 25 26 29 30 31
+INCREMENT_OPERATOR   : 4 5
 INCREMENT_SELF_ASSIGN_OPERATOR : 
-INT                  : 19
+INT                  : 43
 INTTYPE              : 
-LCURLY_BRACKET       : 5 6 8 9 10 11 12 12 13 13
-LESS_THAN            : 36
-LESS_THAN_EQUAL      : 37
-LINKEDHASHSETTYPE    : 
-LIST                 : 1 2 2 3 3 4
-LPAREN               : 2 3 5 6 10 11 12 13
-LSBRACKET            : 1 4
+LCURLY_BRACKET       : 1 13 14 15 16 25 26 28 29 30 31 32 32 33 33
+LESS_THAN            : 13 14 15 16 58
+LESS_THAN_EQUAL      : 59
+LINKEDHASHSETTYPE    : 19
+LIST                 : 21 22 22 23 23 24
+LPAREN               : 1 22 23 25 26 30 31 32 33
+LSBRACKET            : 21 24
 METHOD               : 
-MINUS                : 
+MINUS                : 10
 NOT_EQUAL            : 
 NUM                  : 
-OBJTYPE              : 1 2 2 3 4
-OR                   : 33
-PLUS                 : 
+OBJTYPE              : 13 14 15 16 21 22 22 23 24
+OR                   : 55
+PLUS                 : 9
 PRINT                : 
-RCURLY_BRACKET       : 5 7 8 10 12 12 13
+RCURLY_BRACKET       : 1 13 14 15 16 25 27 28 30 32 32 33
 RECORD_ARG           : 
 RETURN               : 
-RPAREN               : 2 3 5 6 10 11 12 13
-RSBRACKET            : 1 4
-SETTYPE              : 
-SPLAYTREESETTYPE     : 
-STATIC               : 28
-STR                  : 20
+RPAREN               : 1 22 23 25 26 30 31 32 33
+RSBRACKET            : 21 24
+SETTYPE              : 17
+SPLAYTREESETTYPE     : 20
+STATIC               : 49
+STR                  : 40
 STRINGTYPE           : 
-TIMES                : 
-TRUE                 : 22
-VAR                  : 24
-VOID                 : 27
+TIMES                : 11
+TRUE                 : 41
+VAR                  : 13 15 45
+VOID                 : 48
 WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-codeLine             : 0
-comparator           : 14
-condition            : 15 16
-conditionProduction  : 5 6 10 11 16
-logicalOperator      : 16
-types                : 12 13 30 31
-typesVarProduction   : 12 13 31
-value                : 17 18
-values               : 4 18
+codeLine             : 1 0
+comparator           : 34
+condition            : 35 36
+conditionProduction  : 1 25 26 30 31 36
+logicalOperator      : 36
+numericValue         : 7 8 39
+operation            : 1
+operator             : 6 7 8
+setTypes             : 14 16
+types                : 32 33 51 52 53
+typesVarAsignation   : 1
+typesVarProduction   : 32 33 52
+value                : 37 38 53
+values               : 15 16 24 38
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . codeLine
-    (1) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-    (2) codeLine -> . LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> . LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
-    (4) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
-    (5) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (6) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-    (7) codeLine -> . RCURLY_BRACKET
-    (8) codeLine -> . ELSE LCURLY_BRACKET RCURLY_BRACKET
-    (9) codeLine -> . IF LCURLY_BRACKET
-    (10) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
-    (12) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
-    (24) types -> . VAR
-    (25) types -> . CONST
-    (26) types -> . FINAL
-    (27) types -> . VOID
-    (28) types -> . STATIC
-    (29) types -> . BOOL
+    (1) codeLine -> . FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+    (13) codeLine -> . VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (14) codeLine -> . setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> . VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> . setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    (21) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> . LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> . LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
+    (25) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (27) codeLine -> . RCURLY_BRACKET
+    (28) codeLine -> . ELSE LCURLY_BRACKET RCURLY_BRACKET
+    (29) codeLine -> . IF LCURLY_BRACKET
+    (30) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (32) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (17) setTypes -> . SETTYPE
+    (18) setTypes -> . HASHSETTYPE
+    (19) setTypes -> . LINKEDHASHSETTYPE
+    (20) setTypes -> . SPLAYTREESETTYPE
+    (45) types -> . VAR
+    (46) types -> . CONST
+    (47) types -> . FINAL
+    (48) types -> . VOID
+    (49) types -> . STATIC
+    (50) types -> . BOOL
 
-    LIST            shift and go to state 2
-    IF              shift and go to state 3
-    RCURLY_BRACKET  shift and go to state 4
-    ELSE            shift and go to state 5
-    VAR             shift and go to state 7
-    CONST           shift and go to state 8
-    FINAL           shift and go to state 9
-    VOID            shift and go to state 10
-    STATIC          shift and go to state 11
-    BOOL            shift and go to state 12
+    FOR             shift and go to state 2
+    VAR             shift and go to state 4
+    LIST            shift and go to state 6
+    IF              shift and go to state 7
+    RCURLY_BRACKET  shift and go to state 3
+    ELSE            shift and go to state 8
+    SETTYPE         shift and go to state 10
+    HASHSETTYPE     shift and go to state 11
+    LINKEDHASHSETTYPE shift and go to state 12
+    SPLAYTREESETTYPE shift and go to state 13
+    CONST           shift and go to state 14
+    FINAL           shift and go to state 15
+    VOID            shift and go to state 16
+    STATIC          shift and go to state 17
+    BOOL            shift and go to state 18
 
     codeLine                       shift and go to state 1
-    types                          shift and go to state 6
+    setTypes                       shift and go to state 5
+    types                          shift and go to state 9
 
 state 1
 
@@ -188,667 +219,1333 @@ state 1
 
 state 2
 
-    (1) codeLine -> LIST . OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-    (2) codeLine -> LIST . OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> LIST . OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
-    (4) codeLine -> LIST . OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
+    (1) codeLine -> FOR . LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
 
-    OBJTYPE         shift and go to state 13
+    LPAREN          shift and go to state 19
 
 
 state 3
 
-    (5) codeLine -> IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (6) codeLine -> IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET
-    (9) codeLine -> IF . LCURLY_BRACKET
+    (27) codeLine -> RCURLY_BRACKET .
 
-    LPAREN          shift and go to state 14
-    LCURLY_BRACKET  shift and go to state 15
+    $end            reduce using rule 27 (codeLine -> RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 27 (codeLine -> RCURLY_BRACKET .)
 
 
 state 4
 
-    (7) codeLine -> RCURLY_BRACKET .
+    (13) codeLine -> VAR . ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR . ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    (45) types -> VAR .
 
-    $end            reduce using rule 7 (codeLine -> RCURLY_BRACKET .)
+  ! shift/reduce conflict for ID resolved as shift
+    ID              shift and go to state 20
+
+  ! ID              [ reduce using rule 45 (types -> VAR .) ]
 
 
 state 5
 
-    (8) codeLine -> ELSE . LCURLY_BRACKET RCURLY_BRACKET
-    (10) codeLine -> ELSE . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> ELSE . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (14) codeLine -> setTypes . LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes . LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    LCURLY_BRACKET  shift and go to state 16
-    IF              shift and go to state 17
+    LESS_THAN       shift and go to state 21
 
 
 state 6
 
-    (12) codeLine -> types . ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types . ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (21) codeLine -> LIST . OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> LIST . OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> LIST . OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> LIST . OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
 
-    ID              shift and go to state 18
+    OBJTYPE         shift and go to state 22
 
 
 state 7
 
-    (24) types -> VAR .
+    (25) codeLine -> IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (29) codeLine -> IF . LCURLY_BRACKET
 
-    ID              reduce using rule 24 (types -> VAR .)
+    LPAREN          shift and go to state 23
+    LCURLY_BRACKET  shift and go to state 24
 
 
 state 8
 
-    (25) types -> CONST .
+    (28) codeLine -> ELSE . LCURLY_BRACKET RCURLY_BRACKET
+    (30) codeLine -> ELSE . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> ELSE . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
 
-    ID              reduce using rule 25 (types -> CONST .)
+    LCURLY_BRACKET  shift and go to state 25
+    IF              shift and go to state 26
 
 
 state 9
 
-    (26) types -> FINAL .
+    (32) codeLine -> types . ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types . ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
 
-    ID              reduce using rule 26 (types -> FINAL .)
+    ID              shift and go to state 27
 
 
 state 10
 
-    (27) types -> VOID .
+    (17) setTypes -> SETTYPE .
 
-    ID              reduce using rule 27 (types -> VOID .)
+    LESS_THAN       reduce using rule 17 (setTypes -> SETTYPE .)
 
 
 state 11
 
-    (28) types -> STATIC .
+    (18) setTypes -> HASHSETTYPE .
 
-    ID              reduce using rule 28 (types -> STATIC .)
+    LESS_THAN       reduce using rule 18 (setTypes -> HASHSETTYPE .)
 
 
 state 12
 
-    (29) types -> BOOL .
+    (19) setTypes -> LINKEDHASHSETTYPE .
 
-    ID              reduce using rule 29 (types -> BOOL .)
+    LESS_THAN       reduce using rule 19 (setTypes -> LINKEDHASHSETTYPE .)
 
 
 state 13
 
-    (1) codeLine -> LIST OBJTYPE . ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-    (2) codeLine -> LIST OBJTYPE . ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> LIST OBJTYPE . ID EQUALS LIST LPAREN RPAREN DOTCOMA
-    (4) codeLine -> LIST OBJTYPE . ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
+    (20) setTypes -> SPLAYTREESETTYPE .
 
-    ID              shift and go to state 19
+    LESS_THAN       reduce using rule 20 (setTypes -> SPLAYTREESETTYPE .)
 
 
 state 14
 
-    (5) codeLine -> IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (6) codeLine -> IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET
-    (15) conditionProduction -> . condition
-    (16) conditionProduction -> . condition logicalOperator conditionProduction
-    (14) condition -> . ID comparator ID
+    (46) types -> CONST .
 
-    ID              shift and go to state 22
+    ID              reduce using rule 46 (types -> CONST .)
 
-    conditionProduction            shift and go to state 20
-    condition                      shift and go to state 21
 
 state 15
 
-    (9) codeLine -> IF LCURLY_BRACKET .
+    (47) types -> FINAL .
 
-    $end            reduce using rule 9 (codeLine -> IF LCURLY_BRACKET .)
+    ID              reduce using rule 47 (types -> FINAL .)
 
 
 state 16
 
-    (8) codeLine -> ELSE LCURLY_BRACKET . RCURLY_BRACKET
+    (48) types -> VOID .
 
-    RCURLY_BRACKET  shift and go to state 23
+    ID              reduce using rule 48 (types -> VOID .)
 
 
 state 17
 
-    (10) codeLine -> ELSE IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> ELSE IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (49) types -> STATIC .
 
-    LPAREN          shift and go to state 24
+    ID              reduce using rule 49 (types -> STATIC .)
 
 
 state 18
 
-    (12) codeLine -> types ID . LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID . LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (50) types -> BOOL .
 
-    LPAREN          shift and go to state 25
+    ID              reduce using rule 50 (types -> BOOL .)
 
 
 state 19
 
-    (1) codeLine -> LIST OBJTYPE ID . EQUALS LSBRACKET RSBRACKET DOTCOMA
-    (2) codeLine -> LIST OBJTYPE ID . EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> LIST OBJTYPE ID . EQUALS LIST LPAREN RPAREN DOTCOMA
-    (4) codeLine -> LIST OBJTYPE ID . EQUALS LSBRACKET values RSBRACKET DOTCOMA
+    (1) codeLine -> FOR LPAREN . typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+    (53) typesVarAsignation -> . types ID EQUALS value DOTCOMA
+    (45) types -> . VAR
+    (46) types -> . CONST
+    (47) types -> . FINAL
+    (48) types -> . VOID
+    (49) types -> . STATIC
+    (50) types -> . BOOL
 
-    EQUALS          shift and go to state 26
+    VAR             shift and go to state 30
+    CONST           shift and go to state 14
+    FINAL           shift and go to state 15
+    VOID            shift and go to state 16
+    STATIC          shift and go to state 17
+    BOOL            shift and go to state 18
 
+    typesVarAsignation             shift and go to state 28
+    types                          shift and go to state 29
 
 state 20
 
-    (5) codeLine -> IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (6) codeLine -> IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET
+    (13) codeLine -> VAR ID . EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID . EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    RPAREN          shift and go to state 27
+    EQUALS          shift and go to state 31
 
 
 state 21
 
-    (15) conditionProduction -> condition .
-    (16) conditionProduction -> condition . logicalOperator conditionProduction
-    (32) logicalOperator -> . AND
-    (33) logicalOperator -> . OR
+    (14) codeLine -> setTypes LESS_THAN . OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN . OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    RPAREN          reduce using rule 15 (conditionProduction -> condition .)
-    AND             shift and go to state 29
-    OR              shift and go to state 30
+    OBJTYPE         shift and go to state 32
 
-    logicalOperator                shift and go to state 28
 
 state 22
 
-    (14) condition -> ID . comparator ID
-    (34) comparator -> . GREATER_THAN
-    (35) comparator -> . GREATER_THAN_EQUAL
-    (36) comparator -> . LESS_THAN
-    (37) comparator -> . LESS_THAN_EQUAL
-    (38) comparator -> . EQUAL
+    (21) codeLine -> LIST OBJTYPE . ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> LIST OBJTYPE . ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> LIST OBJTYPE . ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> LIST OBJTYPE . ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
 
-    GREATER_THAN    shift and go to state 32
-    GREATER_THAN_EQUAL shift and go to state 33
-    LESS_THAN       shift and go to state 34
-    LESS_THAN_EQUAL shift and go to state 35
-    EQUAL           shift and go to state 36
+    ID              shift and go to state 33
 
-    comparator                     shift and go to state 31
 
 state 23
 
-    (8) codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET .
+    (25) codeLine -> IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET
+    (35) conditionProduction -> . condition
+    (36) conditionProduction -> . condition logicalOperator conditionProduction
+    (34) condition -> . ID comparator ID
 
-    $end            reduce using rule 8 (codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET .)
+    ID              shift and go to state 36
 
+    conditionProduction            shift and go to state 34
+    condition                      shift and go to state 35
 
 state 24
 
-    (10) codeLine -> ELSE IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> ELSE IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET
-    (15) conditionProduction -> . condition
-    (16) conditionProduction -> . condition logicalOperator conditionProduction
-    (14) condition -> . ID comparator ID
+    (29) codeLine -> IF LCURLY_BRACKET .
 
-    ID              shift and go to state 22
+    $end            reduce using rule 29 (codeLine -> IF LCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 29 (codeLine -> IF LCURLY_BRACKET .)
 
-    conditionProduction            shift and go to state 37
-    condition                      shift and go to state 21
 
 state 25
 
-    (12) codeLine -> types ID LPAREN . LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN . LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (28) codeLine -> ELSE LCURLY_BRACKET . RCURLY_BRACKET
 
-    LCURLY_BRACKET  shift and go to state 38
+    RCURLY_BRACKET  shift and go to state 37
 
 
 state 26
 
-    (1) codeLine -> LIST OBJTYPE ID EQUALS . LSBRACKET RSBRACKET DOTCOMA
-    (2) codeLine -> LIST OBJTYPE ID EQUALS . LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> LIST OBJTYPE ID EQUALS . LIST LPAREN RPAREN DOTCOMA
-    (4) codeLine -> LIST OBJTYPE ID EQUALS . LSBRACKET values RSBRACKET DOTCOMA
+    (30) codeLine -> ELSE IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> ELSE IF . LPAREN conditionProduction RPAREN LCURLY_BRACKET
 
-    LSBRACKET       shift and go to state 40
-    LIST            shift and go to state 39
+    LPAREN          shift and go to state 38
 
 
 state 27
 
-    (5) codeLine -> IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET RCURLY_BRACKET
-    (6) codeLine -> IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET
+    (32) codeLine -> types ID . LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID . LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
 
-    LCURLY_BRACKET  shift and go to state 41
+    LPAREN          shift and go to state 39
 
 
 state 28
 
-    (16) conditionProduction -> condition logicalOperator . conditionProduction
-    (15) conditionProduction -> . condition
-    (16) conditionProduction -> . condition logicalOperator conditionProduction
-    (14) condition -> . ID comparator ID
+    (1) codeLine -> FOR LPAREN typesVarAsignation . conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+    (35) conditionProduction -> . condition
+    (36) conditionProduction -> . condition logicalOperator conditionProduction
+    (34) condition -> . ID comparator ID
 
-    ID              shift and go to state 22
+    ID              shift and go to state 36
 
-    condition                      shift and go to state 21
-    conditionProduction            shift and go to state 42
+    conditionProduction            shift and go to state 40
+    condition                      shift and go to state 35
 
 state 29
 
-    (32) logicalOperator -> AND .
+    (53) typesVarAsignation -> types . ID EQUALS value DOTCOMA
 
-    ID              reduce using rule 32 (logicalOperator -> AND .)
+    ID              shift and go to state 41
 
 
 state 30
 
-    (33) logicalOperator -> OR .
+    (45) types -> VAR .
 
-    ID              reduce using rule 33 (logicalOperator -> OR .)
+    ID              reduce using rule 45 (types -> VAR .)
 
 
 state 31
 
-    (14) condition -> ID comparator . ID
+    (13) codeLine -> VAR ID EQUALS . LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID EQUALS . LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    ID              shift and go to state 43
+    LESS_THAN       shift and go to state 42
 
 
 state 32
 
-    (34) comparator -> GREATER_THAN .
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE . GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE . GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    ID              reduce using rule 34 (comparator -> GREATER_THAN .)
+    GREATER_THAN    shift and go to state 43
 
 
 state 33
 
-    (35) comparator -> GREATER_THAN_EQUAL .
+    (21) codeLine -> LIST OBJTYPE ID . EQUALS LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> LIST OBJTYPE ID . EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> LIST OBJTYPE ID . EQUALS LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> LIST OBJTYPE ID . EQUALS LSBRACKET values RSBRACKET DOTCOMA
 
-    ID              reduce using rule 35 (comparator -> GREATER_THAN_EQUAL .)
+    EQUALS          shift and go to state 44
 
 
 state 34
 
-    (36) comparator -> LESS_THAN .
+    (25) codeLine -> IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET
 
-    ID              reduce using rule 36 (comparator -> LESS_THAN .)
+    RPAREN          shift and go to state 45
 
 
 state 35
 
-    (37) comparator -> LESS_THAN_EQUAL .
+    (35) conditionProduction -> condition .
+    (36) conditionProduction -> condition . logicalOperator conditionProduction
+    (54) logicalOperator -> . AND
+    (55) logicalOperator -> . OR
 
-    ID              reduce using rule 37 (comparator -> LESS_THAN_EQUAL .)
+    RPAREN          reduce using rule 35 (conditionProduction -> condition .)
+    DOTCOMA         reduce using rule 35 (conditionProduction -> condition .)
+    AND             shift and go to state 47
+    OR              shift and go to state 48
 
+    logicalOperator                shift and go to state 46
 
 state 36
 
-    (38) comparator -> EQUAL .
+    (34) condition -> ID . comparator ID
+    (56) comparator -> . GREATER_THAN
+    (57) comparator -> . GREATER_THAN_EQUAL
+    (58) comparator -> . LESS_THAN
+    (59) comparator -> . LESS_THAN_EQUAL
+    (60) comparator -> . EQUAL
 
-    ID              reduce using rule 38 (comparator -> EQUAL .)
+    GREATER_THAN    shift and go to state 50
+    GREATER_THAN_EQUAL shift and go to state 51
+    LESS_THAN       shift and go to state 52
+    LESS_THAN_EQUAL shift and go to state 53
+    EQUAL           shift and go to state 54
 
+    comparator                     shift and go to state 49
 
 state 37
 
-    (10) codeLine -> ELSE IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> ELSE IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET
+    (28) codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET .
 
-    RPAREN          shift and go to state 44
+    $end            reduce using rule 28 (codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 28 (codeLine -> ELSE LCURLY_BRACKET RCURLY_BRACKET .)
 
 
 state 38
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET . typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN LCURLY_BRACKET . typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
-    (30) typesVarProduction -> . types ID
-    (31) typesVarProduction -> . types ID COMA typesVarProduction
-    (24) types -> . VAR
-    (25) types -> . CONST
-    (26) types -> . FINAL
-    (27) types -> . VOID
-    (28) types -> . STATIC
-    (29) types -> . BOOL
+    (30) codeLine -> ELSE IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> ELSE IF LPAREN . conditionProduction RPAREN LCURLY_BRACKET
+    (35) conditionProduction -> . condition
+    (36) conditionProduction -> . condition logicalOperator conditionProduction
+    (34) condition -> . ID comparator ID
 
-    VAR             shift and go to state 7
-    CONST           shift and go to state 8
-    FINAL           shift and go to state 9
-    VOID            shift and go to state 10
-    STATIC          shift and go to state 11
-    BOOL            shift and go to state 12
+    ID              shift and go to state 36
 
-    types                          shift and go to state 45
-    typesVarProduction             shift and go to state 46
+    conditionProduction            shift and go to state 55
+    condition                      shift and go to state 35
 
 state 39
 
-    (2) codeLine -> LIST OBJTYPE ID EQUALS LIST . OBJTYPE LPAREN RPAREN DOTCOMA
-    (3) codeLine -> LIST OBJTYPE ID EQUALS LIST . LPAREN RPAREN DOTCOMA
+    (32) codeLine -> types ID LPAREN . LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN . LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
 
-    OBJTYPE         shift and go to state 47
-    LPAREN          shift and go to state 48
+    LCURLY_BRACKET  shift and go to state 56
 
 
 state 40
 
-    (1) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET . RSBRACKET DOTCOMA
-    (4) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET . values RSBRACKET DOTCOMA
-    (17) values -> . value
-    (18) values -> . value COMA values
-    (19) value -> . INT
-    (20) value -> . STR
-    (21) value -> . DOUBLE
-    (22) value -> . TRUE
-    (23) value -> . FALSE
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction . DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
 
-    RSBRACKET       shift and go to state 49
-    INT             shift and go to state 52
-    STR             shift and go to state 53
-    DOUBLE          shift and go to state 54
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 56
+    DOTCOMA         shift and go to state 57
 
-    values                         shift and go to state 50
-    value                          shift and go to state 51
 
 state 41
 
-    (5) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET . RCURLY_BRACKET
-    (6) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .
+    (53) typesVarAsignation -> types ID . EQUALS value DOTCOMA
 
-    RCURLY_BRACKET  shift and go to state 57
-    $end            reduce using rule 6 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .)
+    EQUALS          shift and go to state 58
 
 
 state 42
 
-    (16) conditionProduction -> condition logicalOperator conditionProduction .
+    (13) codeLine -> VAR ID EQUALS LESS_THAN . OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID EQUALS LESS_THAN . OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    RPAREN          reduce using rule 16 (conditionProduction -> condition logicalOperator conditionProduction .)
+    OBJTYPE         shift and go to state 59
 
 
 state 43
 
-    (14) condition -> ID comparator ID .
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN . ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN . ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    AND             reduce using rule 14 (condition -> ID comparator ID .)
-    OR              reduce using rule 14 (condition -> ID comparator ID .)
-    RPAREN          reduce using rule 14 (condition -> ID comparator ID .)
+    ID              shift and go to state 60
 
 
 state 44
 
-    (10) codeLine -> ELSE IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET RCURLY_BRACKET
-    (11) codeLine -> ELSE IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET
+    (21) codeLine -> LIST OBJTYPE ID EQUALS . LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> LIST OBJTYPE ID EQUALS . LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> LIST OBJTYPE ID EQUALS . LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> LIST OBJTYPE ID EQUALS . LSBRACKET values RSBRACKET DOTCOMA
 
-    LCURLY_BRACKET  shift and go to state 58
+    LSBRACKET       shift and go to state 62
+    LIST            shift and go to state 61
 
 
 state 45
 
-    (30) typesVarProduction -> types . ID
-    (31) typesVarProduction -> types . ID COMA typesVarProduction
+    (25) codeLine -> IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET
 
-    ID              shift and go to state 59
+    LCURLY_BRACKET  shift and go to state 63
 
 
 state 46
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction . RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction . RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (36) conditionProduction -> condition logicalOperator . conditionProduction
+    (35) conditionProduction -> . condition
+    (36) conditionProduction -> . condition logicalOperator conditionProduction
+    (34) condition -> . ID comparator ID
 
-    RCURLY_BRACKET  shift and go to state 60
+    ID              shift and go to state 36
 
+    condition                      shift and go to state 35
+    conditionProduction            shift and go to state 64
 
 state 47
 
-    (2) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE . LPAREN RPAREN DOTCOMA
+    (54) logicalOperator -> AND .
 
-    LPAREN          shift and go to state 61
+    ID              reduce using rule 54 (logicalOperator -> AND .)
 
 
 state 48
 
-    (3) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN . RPAREN DOTCOMA
+    (55) logicalOperator -> OR .
 
-    RPAREN          shift and go to state 62
+    ID              reduce using rule 55 (logicalOperator -> OR .)
 
 
 state 49
 
-    (1) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET . DOTCOMA
+    (34) condition -> ID comparator . ID
 
-    DOTCOMA         shift and go to state 63
+    ID              shift and go to state 65
 
 
 state 50
 
-    (4) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values . RSBRACKET DOTCOMA
+    (56) comparator -> GREATER_THAN .
 
-    RSBRACKET       shift and go to state 64
+    ID              reduce using rule 56 (comparator -> GREATER_THAN .)
 
 
 state 51
 
-    (17) values -> value .
-    (18) values -> value . COMA values
+    (57) comparator -> GREATER_THAN_EQUAL .
 
-    RSBRACKET       reduce using rule 17 (values -> value .)
-    COMA            shift and go to state 65
+    ID              reduce using rule 57 (comparator -> GREATER_THAN_EQUAL .)
 
 
 state 52
 
-    (19) value -> INT .
+    (58) comparator -> LESS_THAN .
 
-    COMA            reduce using rule 19 (value -> INT .)
-    RSBRACKET       reduce using rule 19 (value -> INT .)
+    ID              reduce using rule 58 (comparator -> LESS_THAN .)
 
 
 state 53
 
-    (20) value -> STR .
+    (59) comparator -> LESS_THAN_EQUAL .
 
-    COMA            reduce using rule 20 (value -> STR .)
-    RSBRACKET       reduce using rule 20 (value -> STR .)
+    ID              reduce using rule 59 (comparator -> LESS_THAN_EQUAL .)
 
 
 state 54
 
-    (21) value -> DOUBLE .
+    (60) comparator -> EQUAL .
 
-    COMA            reduce using rule 21 (value -> DOUBLE .)
-    RSBRACKET       reduce using rule 21 (value -> DOUBLE .)
+    ID              reduce using rule 60 (comparator -> EQUAL .)
 
 
 state 55
 
-    (22) value -> TRUE .
+    (30) codeLine -> ELSE IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> ELSE IF LPAREN conditionProduction . RPAREN LCURLY_BRACKET
 
-    COMA            reduce using rule 22 (value -> TRUE .)
-    RSBRACKET       reduce using rule 22 (value -> TRUE .)
+    RPAREN          shift and go to state 66
 
 
 state 56
 
-    (23) value -> FALSE .
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET . typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN LCURLY_BRACKET . typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (51) typesVarProduction -> . types ID
+    (52) typesVarProduction -> . types ID COMA typesVarProduction
+    (45) types -> . VAR
+    (46) types -> . CONST
+    (47) types -> . FINAL
+    (48) types -> . VOID
+    (49) types -> . STATIC
+    (50) types -> . BOOL
 
-    COMA            reduce using rule 23 (value -> FALSE .)
-    RSBRACKET       reduce using rule 23 (value -> FALSE .)
+    VAR             shift and go to state 30
+    CONST           shift and go to state 14
+    FINAL           shift and go to state 15
+    VOID            shift and go to state 16
+    STATIC          shift and go to state 17
+    BOOL            shift and go to state 18
 
+    types                          shift and go to state 67
+    typesVarProduction             shift and go to state 68
 
 state 57
 
-    (5) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA . operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+    (2) operation -> . ID DECREMENT_OPERATOR
+    (3) operation -> . DECREMENT_OPERATOR ID
+    (4) operation -> . INCREMENT_OPERATOR ID
+    (5) operation -> . ID INCREMENT_OPERATOR
+    (6) operation -> . ID operator ID
+    (7) operation -> . ID operator numericValue
+    (8) operation -> . numericValue operator ID
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
 
-    $end            reduce using rule 5 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    ID              shift and go to state 70
+    DECREMENT_OPERATOR shift and go to state 71
+    INCREMENT_OPERATOR shift and go to state 72
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
 
+    operation                      shift and go to state 69
+    numericValue                   shift and go to state 73
 
 state 58
 
-    (10) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET . RCURLY_BRACKET
-    (11) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .
+    (53) typesVarAsignation -> types ID EQUALS . value DOTCOMA
+    (39) value -> . numericValue
+    (40) value -> . STR
+    (41) value -> . TRUE
+    (42) value -> . FALSE
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
 
-    RCURLY_BRACKET  shift and go to state 66
-    $end            reduce using rule 11 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .)
+    STR             shift and go to state 78
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 80
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
 
+    value                          shift and go to state 76
+    numericValue                   shift and go to state 77
 
 state 59
 
-    (30) typesVarProduction -> types ID .
-    (31) typesVarProduction -> types ID . COMA typesVarProduction
+    (13) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE . GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE . GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    RCURLY_BRACKET  reduce using rule 30 (typesVarProduction -> types ID .)
-    COMA            shift and go to state 67
+    GREATER_THAN    shift and go to state 81
 
 
 state 60
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET . RPAREN LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET . RPAREN LCURLY_BRACKET
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID . EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID . EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
 
-    RPAREN          shift and go to state 68
+    EQUALS          shift and go to state 82
 
 
 state 61
 
-    (2) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN . RPAREN DOTCOMA
+    (22) codeLine -> LIST OBJTYPE ID EQUALS LIST . OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> LIST OBJTYPE ID EQUALS LIST . LPAREN RPAREN DOTCOMA
 
-    RPAREN          shift and go to state 69
+    OBJTYPE         shift and go to state 83
+    LPAREN          shift and go to state 84
 
 
 state 62
 
-    (3) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN . DOTCOMA
+    (21) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET . RSBRACKET DOTCOMA
+    (24) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET . values RSBRACKET DOTCOMA
+    (37) values -> . value
+    (38) values -> . value COMA values
+    (39) value -> . numericValue
+    (40) value -> . STR
+    (41) value -> . TRUE
+    (42) value -> . FALSE
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
 
-    DOTCOMA         shift and go to state 70
+    RSBRACKET       shift and go to state 85
+    STR             shift and go to state 78
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 80
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
 
+    values                         shift and go to state 86
+    value                          shift and go to state 87
+    numericValue                   shift and go to state 77
 
 state 63
 
-    (1) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA .
+    (25) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET . RCURLY_BRACKET
+    (26) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .
 
-    $end            reduce using rule 1 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA .)
+  ! shift/reduce conflict for RCURLY_BRACKET resolved as shift
+    RCURLY_BRACKET  shift and go to state 88
+    $end            reduce using rule 26 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .)
+
+  ! RCURLY_BRACKET  [ reduce using rule 26 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .) ]
 
 
 state 64
 
-    (4) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET . DOTCOMA
+    (36) conditionProduction -> condition logicalOperator conditionProduction .
 
-    DOTCOMA         shift and go to state 71
+    RPAREN          reduce using rule 36 (conditionProduction -> condition logicalOperator conditionProduction .)
+    DOTCOMA         reduce using rule 36 (conditionProduction -> condition logicalOperator conditionProduction .)
 
 
 state 65
 
-    (18) values -> value COMA . values
-    (17) values -> . value
-    (18) values -> . value COMA values
-    (19) value -> . INT
-    (20) value -> . STR
-    (21) value -> . DOUBLE
-    (22) value -> . TRUE
-    (23) value -> . FALSE
+    (34) condition -> ID comparator ID .
 
-    INT             shift and go to state 52
-    STR             shift and go to state 53
-    DOUBLE          shift and go to state 54
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 56
+    AND             reduce using rule 34 (condition -> ID comparator ID .)
+    OR              reduce using rule 34 (condition -> ID comparator ID .)
+    RPAREN          reduce using rule 34 (condition -> ID comparator ID .)
+    DOTCOMA         reduce using rule 34 (condition -> ID comparator ID .)
 
-    value                          shift and go to state 51
-    values                         shift and go to state 72
 
 state 66
 
-    (10) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+    (30) codeLine -> ELSE IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> ELSE IF LPAREN conditionProduction RPAREN . LCURLY_BRACKET
 
-    $end            reduce using rule 10 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    LCURLY_BRACKET  shift and go to state 89
 
 
 state 67
 
-    (31) typesVarProduction -> types ID COMA . typesVarProduction
-    (30) typesVarProduction -> . types ID
-    (31) typesVarProduction -> . types ID COMA typesVarProduction
-    (24) types -> . VAR
-    (25) types -> . CONST
-    (26) types -> . FINAL
-    (27) types -> . VOID
-    (28) types -> . STATIC
-    (29) types -> . BOOL
+    (51) typesVarProduction -> types . ID
+    (52) typesVarProduction -> types . ID COMA typesVarProduction
 
-    VAR             shift and go to state 7
-    CONST           shift and go to state 8
-    FINAL           shift and go to state 9
-    VOID            shift and go to state 10
-    STATIC          shift and go to state 11
-    BOOL            shift and go to state 12
+    ID              shift and go to state 90
 
-    types                          shift and go to state 45
-    typesVarProduction             shift and go to state 73
 
 state 68
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN . LCURLY_BRACKET RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN . LCURLY_BRACKET
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction . RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction . RCURLY_BRACKET RPAREN LCURLY_BRACKET
 
-    LCURLY_BRACKET  shift and go to state 74
+    RCURLY_BRACKET  shift and go to state 91
 
 
 state 69
 
-    (2) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN . DOTCOMA
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation . RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
 
-    DOTCOMA         shift and go to state 75
+    RPAREN          shift and go to state 92
 
 
 state 70
 
-    (3) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA .
+    (2) operation -> ID . DECREMENT_OPERATOR
+    (5) operation -> ID . INCREMENT_OPERATOR
+    (6) operation -> ID . operator ID
+    (7) operation -> ID . operator numericValue
+    (9) operator -> . PLUS
+    (10) operator -> . MINUS
+    (11) operator -> . TIMES
+    (12) operator -> . DIVIDE
 
-    $end            reduce using rule 3 (codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA .)
+    DECREMENT_OPERATOR shift and go to state 93
+    INCREMENT_OPERATOR shift and go to state 94
+    PLUS            shift and go to state 96
+    MINUS           shift and go to state 97
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 99
 
+    operator                       shift and go to state 95
 
 state 71
 
-    (4) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA .
+    (3) operation -> DECREMENT_OPERATOR . ID
 
-    $end            reduce using rule 4 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA .)
+    ID              shift and go to state 100
 
 
 state 72
 
-    (18) values -> value COMA values .
+    (4) operation -> INCREMENT_OPERATOR . ID
 
-    RSBRACKET       reduce using rule 18 (values -> value COMA values .)
+    ID              shift and go to state 101
 
 
 state 73
 
-    (31) typesVarProduction -> types ID COMA typesVarProduction .
+    (8) operation -> numericValue . operator ID
+    (9) operator -> . PLUS
+    (10) operator -> . MINUS
+    (11) operator -> . TIMES
+    (12) operator -> . DIVIDE
 
-    RCURLY_BRACKET  reduce using rule 31 (typesVarProduction -> types ID COMA typesVarProduction .)
+    PLUS            shift and go to state 96
+    MINUS           shift and go to state 97
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 99
 
+    operator                       shift and go to state 102
 
 state 74
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET . RCURLY_BRACKET
-    (13) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET .
+    (43) numericValue -> INT .
 
-    RCURLY_BRACKET  shift and go to state 76
-    $end            reduce using rule 13 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET .)
+    PLUS            reduce using rule 43 (numericValue -> INT .)
+    MINUS           reduce using rule 43 (numericValue -> INT .)
+    TIMES           reduce using rule 43 (numericValue -> INT .)
+    DIVIDE          reduce using rule 43 (numericValue -> INT .)
+    DOTCOMA         reduce using rule 43 (numericValue -> INT .)
+    COMA            reduce using rule 43 (numericValue -> INT .)
+    RSBRACKET       reduce using rule 43 (numericValue -> INT .)
+    RPAREN          reduce using rule 43 (numericValue -> INT .)
+    RCURLY_BRACKET  reduce using rule 43 (numericValue -> INT .)
 
 
 state 75
 
-    (2) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA .
+    (44) numericValue -> DOUBLE .
 
-    $end            reduce using rule 2 (codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA .)
+    PLUS            reduce using rule 44 (numericValue -> DOUBLE .)
+    MINUS           reduce using rule 44 (numericValue -> DOUBLE .)
+    TIMES           reduce using rule 44 (numericValue -> DOUBLE .)
+    DIVIDE          reduce using rule 44 (numericValue -> DOUBLE .)
+    DOTCOMA         reduce using rule 44 (numericValue -> DOUBLE .)
+    COMA            reduce using rule 44 (numericValue -> DOUBLE .)
+    RSBRACKET       reduce using rule 44 (numericValue -> DOUBLE .)
+    RPAREN          reduce using rule 44 (numericValue -> DOUBLE .)
+    RCURLY_BRACKET  reduce using rule 44 (numericValue -> DOUBLE .)
 
 
 state 76
 
-    (12) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+    (53) typesVarAsignation -> types ID EQUALS value . DOTCOMA
 
-    $end            reduce using rule 12 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    DOTCOMA         shift and go to state 103
 
+
+state 77
+
+    (39) value -> numericValue .
+
+    DOTCOMA         reduce using rule 39 (value -> numericValue .)
+    COMA            reduce using rule 39 (value -> numericValue .)
+    RSBRACKET       reduce using rule 39 (value -> numericValue .)
+    RCURLY_BRACKET  reduce using rule 39 (value -> numericValue .)
+
+
+state 78
+
+    (40) value -> STR .
+
+    DOTCOMA         reduce using rule 40 (value -> STR .)
+    COMA            reduce using rule 40 (value -> STR .)
+    RSBRACKET       reduce using rule 40 (value -> STR .)
+    RCURLY_BRACKET  reduce using rule 40 (value -> STR .)
+
+
+state 79
+
+    (41) value -> TRUE .
+
+    DOTCOMA         reduce using rule 41 (value -> TRUE .)
+    COMA            reduce using rule 41 (value -> TRUE .)
+    RSBRACKET       reduce using rule 41 (value -> TRUE .)
+    RCURLY_BRACKET  reduce using rule 41 (value -> TRUE .)
+
+
+state 80
+
+    (42) value -> FALSE .
+
+    DOTCOMA         reduce using rule 42 (value -> FALSE .)
+    COMA            reduce using rule 42 (value -> FALSE .)
+    RSBRACKET       reduce using rule 42 (value -> FALSE .)
+    RCURLY_BRACKET  reduce using rule 42 (value -> FALSE .)
+
+
+state 81
+
+    (13) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN . LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN . LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+
+    LCURLY_BRACKET  shift and go to state 104
+
+
+state 82
+
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS . LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS . LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+
+    LCURLY_BRACKET  shift and go to state 105
+
+
+state 83
+
+    (22) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE . LPAREN RPAREN DOTCOMA
+
+    LPAREN          shift and go to state 106
+
+
+state 84
+
+    (23) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN . RPAREN DOTCOMA
+
+    RPAREN          shift and go to state 107
+
+
+state 85
+
+    (21) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 108
+
+
+state 86
+
+    (24) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values . RSBRACKET DOTCOMA
+
+    RSBRACKET       shift and go to state 109
+
+
+state 87
+
+    (37) values -> value .
+    (38) values -> value . COMA values
+
+    RSBRACKET       reduce using rule 37 (values -> value .)
+    RCURLY_BRACKET  reduce using rule 37 (values -> value .)
+    COMA            shift and go to state 110
+
+
+state 88
+
+    (25) codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+
+    $end            reduce using rule 25 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 25 (codeLine -> IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+
+
+state 89
+
+    (30) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET . RCURLY_BRACKET
+    (31) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .
+
+  ! shift/reduce conflict for RCURLY_BRACKET resolved as shift
+    RCURLY_BRACKET  shift and go to state 111
+    $end            reduce using rule 31 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .)
+
+  ! RCURLY_BRACKET  [ reduce using rule 31 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET .) ]
+
+
+state 90
+
+    (51) typesVarProduction -> types ID .
+    (52) typesVarProduction -> types ID . COMA typesVarProduction
+
+    RCURLY_BRACKET  reduce using rule 51 (typesVarProduction -> types ID .)
+    COMA            shift and go to state 112
+
+
+state 91
+
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET . RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET . RPAREN LCURLY_BRACKET
+
+    RPAREN          shift and go to state 113
+
+
+state 92
+
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN . LCURLY_BRACKET codeLine RCURLY_BRACKET
+
+    LCURLY_BRACKET  shift and go to state 114
+
+
+state 93
+
+    (2) operation -> ID DECREMENT_OPERATOR .
+
+    RPAREN          reduce using rule 2 (operation -> ID DECREMENT_OPERATOR .)
+
+
+state 94
+
+    (5) operation -> ID INCREMENT_OPERATOR .
+
+    RPAREN          reduce using rule 5 (operation -> ID INCREMENT_OPERATOR .)
+
+
+state 95
+
+    (6) operation -> ID operator . ID
+    (7) operation -> ID operator . numericValue
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
+
+    ID              shift and go to state 115
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
+
+    numericValue                   shift and go to state 116
+
+state 96
+
+    (9) operator -> PLUS .
+
+    ID              reduce using rule 9 (operator -> PLUS .)
+    INT             reduce using rule 9 (operator -> PLUS .)
+    DOUBLE          reduce using rule 9 (operator -> PLUS .)
+
+
+state 97
+
+    (10) operator -> MINUS .
+
+    ID              reduce using rule 10 (operator -> MINUS .)
+    INT             reduce using rule 10 (operator -> MINUS .)
+    DOUBLE          reduce using rule 10 (operator -> MINUS .)
+
+
+state 98
+
+    (11) operator -> TIMES .
+
+    ID              reduce using rule 11 (operator -> TIMES .)
+    INT             reduce using rule 11 (operator -> TIMES .)
+    DOUBLE          reduce using rule 11 (operator -> TIMES .)
+
+
+state 99
+
+    (12) operator -> DIVIDE .
+
+    ID              reduce using rule 12 (operator -> DIVIDE .)
+    INT             reduce using rule 12 (operator -> DIVIDE .)
+    DOUBLE          reduce using rule 12 (operator -> DIVIDE .)
+
+
+state 100
+
+    (3) operation -> DECREMENT_OPERATOR ID .
+
+    RPAREN          reduce using rule 3 (operation -> DECREMENT_OPERATOR ID .)
+
+
+state 101
+
+    (4) operation -> INCREMENT_OPERATOR ID .
+
+    RPAREN          reduce using rule 4 (operation -> INCREMENT_OPERATOR ID .)
+
+
+state 102
+
+    (8) operation -> numericValue operator . ID
+
+    ID              shift and go to state 117
+
+
+state 103
+
+    (53) typesVarAsignation -> types ID EQUALS value DOTCOMA .
+
+    ID              reduce using rule 53 (typesVarAsignation -> types ID EQUALS value DOTCOMA .)
+
+
+state 104
+
+    (13) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET . RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET . values RCURLY_BRACKET DOTCOMA
+    (37) values -> . value
+    (38) values -> . value COMA values
+    (39) value -> . numericValue
+    (40) value -> . STR
+    (41) value -> . TRUE
+    (42) value -> . FALSE
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
+
+    RCURLY_BRACKET  shift and go to state 118
+    STR             shift and go to state 78
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 80
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
+
+    values                         shift and go to state 119
+    value                          shift and go to state 87
+    numericValue                   shift and go to state 77
+
+state 105
+
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET . RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET . values RCURLY_BRACKET DOTCOMA
+    (37) values -> . value
+    (38) values -> . value COMA values
+    (39) value -> . numericValue
+    (40) value -> . STR
+    (41) value -> . TRUE
+    (42) value -> . FALSE
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
+
+    RCURLY_BRACKET  shift and go to state 120
+    STR             shift and go to state 78
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 80
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
+
+    values                         shift and go to state 121
+    value                          shift and go to state 87
+    numericValue                   shift and go to state 77
+
+state 106
+
+    (22) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN . RPAREN DOTCOMA
+
+    RPAREN          shift and go to state 122
+
+
+state 107
+
+    (23) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN . DOTCOMA
+
+    DOTCOMA         shift and go to state 123
+
+
+state 108
+
+    (21) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA .
+
+    $end            reduce using rule 21 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 21 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA .)
+
+
+state 109
+
+    (24) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 124
+
+
+state 110
+
+    (38) values -> value COMA . values
+    (37) values -> . value
+    (38) values -> . value COMA values
+    (39) value -> . numericValue
+    (40) value -> . STR
+    (41) value -> . TRUE
+    (42) value -> . FALSE
+    (43) numericValue -> . INT
+    (44) numericValue -> . DOUBLE
+
+    STR             shift and go to state 78
+    TRUE            shift and go to state 79
+    FALSE           shift and go to state 80
+    INT             shift and go to state 74
+    DOUBLE          shift and go to state 75
+
+    value                          shift and go to state 87
+    values                         shift and go to state 125
+    numericValue                   shift and go to state 77
+
+state 111
+
+    (30) codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+
+    $end            reduce using rule 30 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 30 (codeLine -> ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+
+
+state 112
+
+    (52) typesVarProduction -> types ID COMA . typesVarProduction
+    (51) typesVarProduction -> . types ID
+    (52) typesVarProduction -> . types ID COMA typesVarProduction
+    (45) types -> . VAR
+    (46) types -> . CONST
+    (47) types -> . FINAL
+    (48) types -> . VOID
+    (49) types -> . STATIC
+    (50) types -> . BOOL
+
+    VAR             shift and go to state 30
+    CONST           shift and go to state 14
+    FINAL           shift and go to state 15
+    VOID            shift and go to state 16
+    STATIC          shift and go to state 17
+    BOOL            shift and go to state 18
+
+    types                          shift and go to state 67
+    typesVarProduction             shift and go to state 126
+
+state 113
+
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN . LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN . LCURLY_BRACKET
+
+    LCURLY_BRACKET  shift and go to state 127
+
+
+state 114
+
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET . codeLine RCURLY_BRACKET
+    (1) codeLine -> . FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET
+    (13) codeLine -> . VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (14) codeLine -> . setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    (15) codeLine -> . VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    (16) codeLine -> . setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    (21) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    (22) codeLine -> . LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
+    (23) codeLine -> . LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    (24) codeLine -> . LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA
+    (25) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (26) codeLine -> . IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (27) codeLine -> . RCURLY_BRACKET
+    (28) codeLine -> . ELSE LCURLY_BRACKET RCURLY_BRACKET
+    (29) codeLine -> . IF LCURLY_BRACKET
+    (30) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (31) codeLine -> . ELSE IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
+    (32) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET
+    (33) codeLine -> . types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET
+    (17) setTypes -> . SETTYPE
+    (18) setTypes -> . HASHSETTYPE
+    (19) setTypes -> . LINKEDHASHSETTYPE
+    (20) setTypes -> . SPLAYTREESETTYPE
+    (45) types -> . VAR
+    (46) types -> . CONST
+    (47) types -> . FINAL
+    (48) types -> . VOID
+    (49) types -> . STATIC
+    (50) types -> . BOOL
+
+    FOR             shift and go to state 2
+    VAR             shift and go to state 4
+    LIST            shift and go to state 6
+    IF              shift and go to state 7
+    RCURLY_BRACKET  shift and go to state 3
+    ELSE            shift and go to state 8
+    SETTYPE         shift and go to state 10
+    HASHSETTYPE     shift and go to state 11
+    LINKEDHASHSETTYPE shift and go to state 12
+    SPLAYTREESETTYPE shift and go to state 13
+    CONST           shift and go to state 14
+    FINAL           shift and go to state 15
+    VOID            shift and go to state 16
+    STATIC          shift and go to state 17
+    BOOL            shift and go to state 18
+
+    codeLine                       shift and go to state 128
+    setTypes                       shift and go to state 5
+    types                          shift and go to state 9
+
+state 115
+
+    (6) operation -> ID operator ID .
+
+    RPAREN          reduce using rule 6 (operation -> ID operator ID .)
+
+
+state 116
+
+    (7) operation -> ID operator numericValue .
+
+    RPAREN          reduce using rule 7 (operation -> ID operator numericValue .)
+
+
+state 117
+
+    (8) operation -> numericValue operator ID .
+
+    RPAREN          reduce using rule 8 (operation -> numericValue operator ID .)
+
+
+state 118
+
+    (13) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 129
+
+
+state 119
+
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values . RCURLY_BRACKET DOTCOMA
+
+    RCURLY_BRACKET  shift and go to state 130
+
+
+state 120
+
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 131
+
+
+state 121
+
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values . RCURLY_BRACKET DOTCOMA
+
+    RCURLY_BRACKET  shift and go to state 132
+
+
+state 122
+
+    (22) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN . DOTCOMA
+
+    DOTCOMA         shift and go to state 133
+
+
+state 123
+
+    (23) codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA .
+
+    $end            reduce using rule 23 (codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 23 (codeLine -> LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA .)
+
+
+state 124
+
+    (24) codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA .
+
+    $end            reduce using rule 24 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 24 (codeLine -> LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA .)
+
+
+state 125
+
+    (38) values -> value COMA values .
+
+    RSBRACKET       reduce using rule 38 (values -> value COMA values .)
+    RCURLY_BRACKET  reduce using rule 38 (values -> value COMA values .)
+
+
+state 126
+
+    (52) typesVarProduction -> types ID COMA typesVarProduction .
+
+    RCURLY_BRACKET  reduce using rule 52 (typesVarProduction -> types ID COMA typesVarProduction .)
+
+
+state 127
+
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET . RCURLY_BRACKET
+    (33) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET .
+
+  ! shift/reduce conflict for RCURLY_BRACKET resolved as shift
+    RCURLY_BRACKET  shift and go to state 134
+    $end            reduce using rule 33 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET .)
+
+  ! RCURLY_BRACKET  [ reduce using rule 33 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET .) ]
+
+
+state 128
+
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine . RCURLY_BRACKET
+
+    RCURLY_BRACKET  shift and go to state 135
+
+
+state 129
+
+    (13) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .
+
+    $end            reduce using rule 13 (codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 13 (codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .)
+
+
+state 130
+
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 136
+
+
+state 131
+
+    (14) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .
+
+    $end            reduce using rule 14 (codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 14 (codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA .)
+
+
+state 132
+
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET . DOTCOMA
+
+    DOTCOMA         shift and go to state 137
+
+
+state 133
+
+    (22) codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA .
+
+    $end            reduce using rule 22 (codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 22 (codeLine -> LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA .)
+
+
+state 134
+
+    (32) codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET .
+
+    $end            reduce using rule 32 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 32 (codeLine -> types ID LPAREN LCURLY_BRACKET typesVarProduction RCURLY_BRACKET RPAREN LCURLY_BRACKET RCURLY_BRACKET .)
+
+
+state 135
+
+    (1) codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET .
+
+    $end            reduce using rule 1 (codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET .)
+    RCURLY_BRACKET  reduce using rule 1 (codeLine -> FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET .)
+
+
+state 136
+
+    (15) codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .
+
+    $end            reduce using rule 15 (codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 15 (codeLine -> VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .)
+
+
+state 137
+
+    (16) codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .
+
+    $end            reduce using rule 16 (codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .)
+    RCURLY_BRACKET  reduce using rule 16 (codeLine -> setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ID in state 4 resolved as shift
+WARNING: shift/reduce conflict for RCURLY_BRACKET in state 63 resolved as shift
+WARNING: shift/reduce conflict for RCURLY_BRACKET in state 89 resolved as shift
+WARNING: shift/reduce conflict for RCURLY_BRACKET in state 127 resolved as shift
