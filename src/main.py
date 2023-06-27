@@ -2,6 +2,49 @@ import ply.yacc as yacc
 from lexico import tokens
 
 
+def p_forBucle(p):
+    """codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET"""
+
+
+def p_operation(p):
+    """operation : ID DECREMENT_OPERATOR
+    | DECREMENT_OPERATOR ID
+    | INCREMENT_OPERATOR ID
+    | ID INCREMENT_OPERATOR
+    | ID operator ID
+    | ID operator numericValue
+    | numericValue operator ID
+    """
+
+
+def p_operator(p):
+    """operator : PLUS
+    | MINUS
+    | TIMES
+    | DIVIDE
+    """
+
+
+def p_emptySet(p):
+    """codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    """
+
+
+def p_set(p):
+    """codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    """
+
+
+def p_setTypes(p):
+    """setTypes : SETTYPE
+    | HASHSETTYPE
+    | LINKEDHASHSETTYPE
+    | SPLAYTREESETTYPE
+    """
+
+
 def p_emptyList(p):
     """codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
     | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
@@ -55,11 +98,16 @@ def p_values(p):
 
 
 def p_value(p):
-    """value : INT
+    """value : numericValue
     | STR
-    | DOUBLE
     | TRUE
     | FALSE
+    """
+
+
+def p_numericValue(p):
+    """numericValue : INT
+    | DOUBLE
     """
 
 
@@ -87,9 +135,23 @@ def p_explicit_types(p):
 
 
 def p_typesVarProduction(p):
-    """typesVarProduction : types ID
-    | types ID COMA typesVarProduction
+    """typesVarProduction : requiredTypes
+    | requiredTypes COMA typesVarProduction
     """
+
+
+def p_requiredTypes(p):
+    """requiredTypes : REQUIRED types ID
+    | types ID
+    | types CLOSEQUESTIONMARK ID
+    | types LSBRACKET CLOSEQUESTIONMARK ID RSBRACKET
+    """
+
+    # LSBRACKET
+
+
+def p_typesVarAsignation(p):
+    """typesVarAsignation : types ID EQUALS value DOTCOMA"""
 
 
 def p_logicalOperator(p):
@@ -113,14 +175,14 @@ def p_comparator(p):
 def p_declaration(p):
     """codeLine : types ID EQUALS value DOTCOMA
     | var_mods explicit_types ID DOTCOMA
-    | var_mods explicit_types NULLSAFE ID DOTCOMA
+    | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA
     """
 
 
 def p_nullsafe_mod(p):
     """nullsafe_mod : empty
-    | NULLSAFE
+    | CLOSEQUESTIONMARK
     """
 
 
