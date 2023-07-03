@@ -231,8 +231,8 @@ data_test_jose = """
 lexer.input(data_int_jairo)
 
 # Tokenizador
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break
+#     print(tok)
