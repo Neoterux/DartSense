@@ -55,6 +55,13 @@ def p_list(p):
     "codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA"
 
 
+def p_listMethods(p):
+    """codeLine : ID METHOD LPAREN RPAREN DOTCOMA
+    | ID METHOD LPAREN values RPAREN DOTCOMA
+    | ID METHOD DOTCOMA
+    """
+
+
 def p_ifStatement(p):
     """codeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
     | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
@@ -174,6 +181,7 @@ def p_comparator(p):
 #############################
 def p_declaration(p):
     """codeLine : types ID EQUALS value DOTCOMA
+    | explicit_types ID DOTCOMA
     | var_mods explicit_types ID DOTCOMA
     | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA

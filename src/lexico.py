@@ -48,6 +48,7 @@ tokens = (
     "ID",
     "EQUALS",
     "DOTCOMA",
+    "DOT",
     "COMA",
     "OBJTYPE",
     "STR",
@@ -87,6 +88,7 @@ t_RSBRACKET = r"\]"
 t_LCURLY_BRACKET = r"\{"
 t_RCURLY_BRACKET = r"\}"
 t_DOTCOMA = r";"
+t_DOT = r"."
 t_COMA = r","
 t_EQUALS = r"="
 t_INT = r"-?\d+"
