@@ -1,6 +1,9 @@
 import ply.yacc as yacc
 from lexico import tokens
 
+_has_errors = False
+_last_error = None
+
 def p_forBucle(p):
     """codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET"""
 
@@ -280,6 +283,10 @@ def p_invoke(p):
 
 
 def p_error(p):
+    global _has_errors
+    global _last_error
+    _has_errors = True
+    _last_error = p
     if p:
         print("Error de sintaxis en token:", p.type)
         # print(f'[DEBUG] info of p: {p}')
@@ -288,16 +295,24 @@ def p_error(p):
         print("Syntax error at EOF")
 
 
+def getError():
+    global _has_errors
+    global _last_error
+    error = _last_error if _has_errors else None
+    _has_errors = False
+    return error
+
 # Build the parser
 parserSintactico = yacc.yacc()
 
-# while True:
-#     try:
-#         s = input("dart > ")
-#     except EOFError:
-#         break
-#     if not s:
-#         continue
-#     result = parserSintactico.parse(s)
-#     if result != None:
-#         print(result)
+if __name__ == '__main__':
+    while True:
+        try:
+            s = input("dart > ")
+        except EOFError:
+            break
+        if not s:
+            continue
+        result = parserSintactico.parse(s)
+        if result != None:
+            print(result)
