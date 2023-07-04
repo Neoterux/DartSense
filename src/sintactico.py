@@ -291,13 +291,13 @@ def p_error(p):
 # Build the parser
 parserSintactico = yacc.yacc()
 
-while True:
-    try:
-        s = input("dart > ")
-    except EOFError:
-        break
-    if not s:
-        continue
-    result = parserSintactico.parse(s)
-    if result != None:
-        print(result)
+# while True:
+#     try:
+#         s = input("dart > ")
+#     except EOFError:
+#         break
+#     if not s:
+#         continue
+#     result = parserSintactico.parse(s)
+#     if result != None:
+#         print(result)
