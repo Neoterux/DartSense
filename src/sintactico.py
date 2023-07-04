@@ -1,6 +1,17 @@
 import ply.yacc as yacc
 from lexico import tokens
 
+def p_code(p):
+    """code : codeline  LEAP
+    | codeline """
+
+def p_basic(p):
+    """codeLine : printfunc"""
+
+def p_printFunction(p):
+    """printfunc : PRINT LPAREN ID RPAREN
+    | PRINT LPAREN value RPAREN"""
+
 def p_forBucle(p):
     """codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET"""
 
@@ -14,7 +25,6 @@ def p_operation(p):
     | ID operator numericValue
     | numericValue operator ID
     """
-
 
 def p_operator(p):
     """operator : PLUS
@@ -34,7 +44,6 @@ def p_set(p):
     """codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
     | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
     """
-
 
 def p_setTypes(p):
     """setTypes : SETTYPE
@@ -158,8 +167,16 @@ def p_requiredTypes(p):
 
 
 def p_typesVarAsignation(p):
-    """typesVarAsignation : types ID EQUALS value DOTCOMA"""
+    """typesVarAsignation : types ID EQUALS value DOTCOMA
+    | doubleTypeAsignation"""
 
+def p_doubleTypeAsignation(p):
+    """doubleTypeAsignation : doubleTypes ID EQUALS DOUBLE """
+
+def p_doubleTypes(p):
+    """doubleTypes : DOUBLETYPE
+    | VAR
+    | NUM """
 
 def p_logicalOperator(p):
     """logicalOperator : AND

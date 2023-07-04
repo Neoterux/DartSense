@@ -70,9 +70,11 @@ tokens = (
     "DOUBLE",
     "NEG",
     "CLOSEQUESTIONMARK",
+    "LEAP",
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
+t_LEAP = r"\n"
 t_DECREMENT_OPERATOR = r"--"
 t_INCREMENT_OPERATOR = r"\+\+"
 t_INCREMENT_SELF_ASSIGN_OPERATOR = r"\+="
@@ -105,7 +107,7 @@ t_AND = r"&&"
 t_OR = r"\|\|"
 t_COLON = r":"
 t_RECORD_ARG = r"\$\d+"
-t_DOUBLE = r'-?((\d*\.\d+)|(\d+(\.)))'
+t_DOUBLE = r'-?((\d*\.\d+)|(\d+(\.))|(\d+(\.)\d+e(\d{3})))'
 t_NEG = r'!'
 t_CLOSEQUESTIONMARK = r'\?'
 
