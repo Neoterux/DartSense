@@ -363,9 +363,11 @@ def p_error(p):
 def getError():
     global _has_errors
     global _last_error
+    errflag = _has_errors
     error = _last_error if _has_errors else None
+    print(f"[dbg] The error was set: {error}, the flag was: {_has_errors}")
     _has_errors = False
-    return error
+    return (errflag, error)
 
 
 

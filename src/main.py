@@ -20,14 +20,19 @@ def button_callback():
         result = parserSintactico.parse(text, tracking=True)
         if result != None:
             raise SyntaxError('The syntax on the editor is invalid')
-        sinerror = getError()
+        sinerror, errcnt = getError()
+        print(f'[DBG] result of getError(): ({sinerror}, {errcnt})')
         if sinerror:
-            raise ParseError(sinerror)
+            if errcnt is not None:
+                raise ParseError(errcnt)
+            else:
+                raise SyntaxError(f'The code is not valid: \'{text}\'')
         console.insert("1.0", "Result: Sintaxis OK!!!\n")
         console.insert("2.0", f"[{datetime.now()}] parsed:\n")
     except SyntaxError as e:
         print('Error while parsing syntax:', e)
-        console.insert("2.0", f"Result: {e}\n")
+        console.insert("2.0", f"[{datetime.now()}] Syntax Error, {e}\n")
+        # console.insert("2.0", f"Result: {e}\n")
     except ParseError as e:
         err = e.error
         if err:
