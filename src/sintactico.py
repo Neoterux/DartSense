@@ -3,6 +3,7 @@ from lexico import tokens
 
 _has_errors = False
 _last_error = None
+_self_test = False
 
 def p_code(p):
     """code : codeLine  LEAP
@@ -135,7 +136,6 @@ def p_types(p):
     | FINAL
     | VOID
     | STATIC
-    | BOOL
     | explicit_types
     """
 
@@ -168,22 +168,48 @@ def p_requiredTypes(p):
 
     # LSBRACKET
 
+def p_num_self_operation(p):
+    """ codeLine : pre_decrement DOTCOMA
+        | post_decrement DOTCOMA
+        | pre_increment DOTCOMA
+        | post_increment DOTCOMA
+    """
+
+def p_pre_decrement(p):
+    """ pre_decrement : DECREMENT_OPERATOR ID
+        | DECREMENT_OPERATOR symbol_chain
+    """
+
+def p_post_decrement(p):
+    """ post_decrement : ID DECREMENT_OPERATOR
+        | symbol_chain DECREMENT_OPERATOR
+    """
+
+def p_pre_increment(p):
+    """ pre_increment : INCREMENT_OPERATOR ID
+        | INCREMENT_OPERATOR symbol_chain
+    """
+
+def p_post_increment(p):
+    """ post_increment : ID INCREMENT_OPERATOR
+        | symbol_chain INCREMENT_OPERATOR
+    """
+
 
 def p_typesVarAsignation(p):
     """typesVarAsignation : types ID EQUALS value DOTCOMA
-    | doubleTypeAsignation"""
+    | doubleTypeAsignation
+    """
 
 def p_doubleTypeAsignation(p):
-    """doubleTypeAsignation : doubleTypes ID EQUALS DOUBLE """
-
-def p_doubleTypes(p):
-    """doubleTypes : DOUBLETYPE
-    | VAR
-    | NUM """
+    """doubleTypeAsignation : var_mods DOUBLETYPE ID EQUALS DOUBLE
+        | var_mods NUM ID EQUALS DOUBLE
+    """
 
 def p_logicalOperator(p):
     """logicalOperator : AND
     | OR
+    | NOT_EQUAL
     """
 
 
@@ -205,6 +231,17 @@ def p_declaration(p):
     | var_mods explicit_types ID DOTCOMA
     | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA
+    """
+
+def p_int_self_operation(p):
+    """ codeLine : ID DECREMENT_SELF_ASSIGN_OPERATOR int_value_statement
+        | ID INCREMENT_SELF_ASSIGN_OPERATOR int_value_statement
+    """
+
+def p_int_value_statement(p):
+    """ int_value_statement : numericValue
+        | invoke
+        | operation
     """
 
 
@@ -296,20 +333,31 @@ def p_invoke(p):
     """invoke : ID LPAREN values RPAREN
     | ID LPAREN RPAREN
     | ID METHOD LPAREN values RPAREN
+    | symbol_chain DOT METHOD LPAREN RPAREN
+    | symbol_chain DOT METHOD LPAREN values RPAREN
+    """
+
+def p_symbol_chain(p):
+    """ symbol_chain : ID DOT ID
+        | ID DOT symbol_chain
     """
 
 
 def p_error(p):
     global _has_errors
     global _last_error
+    global _self_test
     _has_errors = True
     _last_error = p
     if p:
         print("Error de sintaxis en token:", p.type)
+
         # print(f'[DEBUG] info of p: {p}')
         # sintactico.errok()
     else:
         print("Syntax error at EOF")
+    if _self_test:
+        print(f'The content of p: {p}')
 
 
 def getError():
@@ -319,10 +367,12 @@ def getError():
     _has_errors = False
     return error
 
-# Build the parser
-parserSintactico = yacc.yacc()
+
 
 if __name__ == '__main__':
+    _self_test = True
+    parser = yacc.yacc()
+    print("The parser was set with debug logs")
     while True:
         try:
             s = input("dart > ")
@@ -330,6 +380,9 @@ if __name__ == '__main__':
             break
         if not s:
             continue
-        result = parserSintactico.parse(s)
+        result = parser.parse(s)
         if result != None:
             print(result)
+else:
+    # Build the parser
+    parserSintactico = yacc.yacc()
