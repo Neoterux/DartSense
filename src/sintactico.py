@@ -5,8 +5,8 @@ _has_errors = False
 _last_error = None
 
 def p_code(p):
-    """code : codeline  LEAP
-    | codeline """
+    """code : codeLine  LEAP
+    | codeLine """
 
 def p_basic(p):
     """codeLine : printfunc"""
