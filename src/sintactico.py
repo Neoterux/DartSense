@@ -7,8 +7,16 @@ _self_test = False
 
 def p_code(p):
     """code : codeLine LEAP code
+    | codeLine COMMENTS LEAP code
+    | codeLine COMMENTS
+    | codeLine LEAP
     | codeLine
+    | LEAP code
+    | LEAP
     """
+
+def p_comments(p):
+    "codeLine : COMMENTS"
 
 def p_basic(p):
     "codeLine : printfunc DOTCOMA"
@@ -27,17 +35,17 @@ def p_printFunction(p):
     """
 
 def p_forBucle(p):
-    "codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET"
-
+    """codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET
+    """
 
 def p_operation(p):
-    """operation : ID DECREMENT_OPERATOR
-    | DECREMENT_OPERATOR ID
-    | INCREMENT_OPERATOR ID
-    | ID INCREMENT_OPERATOR
-    | ID operator ID
-    | ID operator numericValue
-    | numericValue operator ID
+    """operation : idComp DECREMENT_OPERATOR
+    | DECREMENT_OPERATOR idComp
+    | INCREMENT_OPERATOR idComp
+    | idComp INCREMENT_OPERATOR
+    | idComp operator idComp
+    | idComp operator numericValue
+    | numericValue operator idComp
     """
 
 def p_operator(p):
@@ -47,35 +55,26 @@ def p_operator(p):
     | DIVIDE
     """
 
-
-def p_emptySet(p):
-    """codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
-    | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+def p_assignamentOP(p):
+    """assignamentOP : PLUS EQUALS
+    | MINUS EQUALS
+    | TIMES EQUALS
+    | DIVIDE EQUALS
     """
 
-
-def p_set(p):
-    """codeLine : VAR ID EQUALS LESS_THAN OBJTYPE GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
-    | setTypes LESS_THAN OBJTYPE GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
-    """
-
-def p_setTypes(p):
-    """setTypes : SETTYPE
-    | HASHSETTYPE
-    | LINKEDHASHSETTYPE
-    | SPLAYTREESETTYPE
-    """
-
+def p_assignament(p):
+    """codeLine : ID assignamentOP ID DOTCOMA
+    | ID assignamentOP numericValue DOTCOMA
+    | ID EQUALS ID DOTCOMA"""
 
 def p_emptyList(p):
-    """codeLine : LIST OBJTYPE ID EQUALS LSBRACKET RSBRACKET DOTCOMA
-    | LIST OBJTYPE ID EQUALS LIST OBJTYPE LPAREN RPAREN DOTCOMA
-    | LIST OBJTYPE ID EQUALS LIST LPAREN RPAREN DOTCOMA
+    """codeLine : LIST LESS_THAN types GREATER_THAN ID EQUALS LSBRACKET RSBRACKET DOTCOMA
+    | LIST LESS_THAN types GREATER_THAN ID EQUALS LIST LESS_THAN types GREATER_THAN LPAREN RPAREN DOTCOMA
+    | LIST LESS_THAN types GREATER_THAN ID EQUALS LIST LPAREN RPAREN DOTCOMA
     """
 
-
 def p_list(p):
-    "codeLine : LIST OBJTYPE ID EQUALS LSBRACKET values RSBRACKET DOTCOMA"
+    "codeLine : LIST LESS_THAN types GREATER_THAN ID EQUALS LSBRACKET values RSBRACKET DOTCOMA"
 
 
 def p_listMethods(p):
@@ -84,13 +83,11 @@ def p_listMethods(p):
     | ID METHOD DOTCOMA
     """
 
-
 def p_ifStatement(p):
     """codeLine : IF LPAREN conditionProduction RPAREN LCURLY_BRACKET RCURLY_BRACKET
     | IF LPAREN conditionProduction RPAREN LCURLY_BRACKET
     | RCURLY_BRACKET
     """
-
 
 def p_elseStatement(p):
     """codeLine : ELSE LCURLY_BRACKET RCURLY_BRACKET
@@ -111,12 +108,19 @@ def p_NamedParametersfunction(p):
 
 
 def p_condition(p):
-    """condition : ID comparator ID
+    """condition : idComp comparator idComp
     | value comparator value
-    | ID comparator value
-    | value comparator ID
+    | idComp comparator value
+    | value comparator idComp
+    | ID
     """
 
+def p_idComp(p):
+    """idComp : ID
+    | ID METHOD
+    | ID METHOD LPAREN RPAREN
+    | ID METHOD LPAREN values RPAREN
+    """
 
 def p_conditionProduction(p):
     """conditionProduction : condition
@@ -137,6 +141,7 @@ def p_value(p):
     | FALSE
     | ID
     | ID LSBRACKET value RSBRACKET
+    | invoke
     """
 
 
@@ -165,9 +170,9 @@ def p_explicit_types(p):
     | LINKEDHASHSETTYPE
     | SPLAYTREESETTYPE
     | BOOL
+    | NUM
     | record_shape
     """
-
 
 def p_typesVarProduction(p):
     """typesVarProduction : requiredTypes
@@ -179,7 +184,7 @@ def p_requiredTypes(p):
     """requiredTypes : REQUIRED types ID
     | types ID
     | types CLOSEQUESTIONMARK ID
-    | types LSBRACKET CLOSEQUESTIONMARK ID RSBRACKET
+    | LSBRACKET types CLOSEQUESTIONMARK ID RSBRACKET
     """
 
     # LSBRACKET
@@ -243,16 +248,19 @@ def p_comparator(p):
 #############################
 def p_declaration(p):
     """codeLine : types ID EQUALS value DOTCOMA
-    | explicit_types ID DOTCOMA
-    | explicit_types ID EQUALS value DOTCOMA
+    | types ID DOTCOMA
     | var_mods explicit_types ID DOTCOMA
     | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA
+    | VAR ID EQUALS value DOTCOMA
+    | VAR ID DOTCOMA
     """
 
 def p_int_self_operation(p):
     """codeLine : ID DECREMENT_SELF_ASSIGN_OPERATOR int_value_statement DOTCOMA
     | ID INCREMENT_SELF_ASSIGN_OPERATOR int_value_statement DOTCOMA
+    | ID DECREMENT_SELF_ASSIGN_OPERATOR ID DOTCOMA
+    | ID INCREMENT_SELF_ASSIGN_OPERATOR ID DOTCOMA
     """
 
 def p_int_value_statement(p):
@@ -342,6 +350,26 @@ def p_evaluable_condition(p):
     | NEG LPAREN evaluable_condition RPAREN
     """
 
+def p_emptySet(p):
+    """codeLine : VAR ID EQUALS LESS_THAN types GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    | setTypes LESS_THAN types GREATER_THAN ID EQUALS LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    | VAR ID EQUALS setTypes LESS_THAN types GREATER_THAN LCURLY_BRACKET RCURLY_BRACKET DOTCOMA
+    """
+
+
+def p_set(p):
+    """codeLine : VAR ID EQUALS LESS_THAN types GREATER_THAN LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    | setTypes LESS_THAN types GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    | VAR ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    | VAR LESS_THAN types GREATER_THAN ID EQUALS LCURLY_BRACKET values RCURLY_BRACKET DOTCOMA
+    """
+
+def p_setTypes(p):
+    """setTypes : SETTYPE
+    | HASHSETTYPE
+    | LINKEDHASHSETTYPE
+    | SPLAYTREESETTYPE
+    """
 
 ##########################################
 ###   Function operators/definitions   ###
@@ -353,6 +381,9 @@ def p_invoke(p):
     | symbol_chain DOT METHOD LPAREN RPAREN
     | symbol_chain DOT METHOD LPAREN values RPAREN
     """
+
+def p_codeInvoke(p):
+    """codeLine : invoke"""
 
 def p_symbol_chain(p):
     """ symbol_chain : ID DOT ID

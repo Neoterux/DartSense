@@ -51,7 +51,6 @@ tokens = (
     "DOTCOMA",
     "DOT",
     "COMA",
-    "OBJTYPE",
     "STR",
     "DECREMENT_OPERATOR",
     "INCREMENT_OPERATOR",
@@ -71,6 +70,7 @@ tokens = (
     "DOUBLE",
     "NEG",
     "CLOSEQUESTIONMARK",
+    "COMMENTS"
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
@@ -89,12 +89,11 @@ t_LSBRACKET = r"\["
 t_RSBRACKET = r"\]"
 t_LCURLY_BRACKET = r"\{"
 t_RCURLY_BRACKET = r"\}"
-t_DOTCOMA = r";"
+t_DOTCOMA = r"\;"
 t_DOT = r"\."
 t_COMA = r","
 t_EQUALS = r"="
 t_INT = r"-?\d+"
-t_OBJTYPE = r"<[\w]+>"
 t_STR = r"""(\"(?:[^\"\\]|\\.)*\")|(\'(?:[^\'\\]|\\.)*\')"""
 t_METHOD = r"\.[a-zA-Z0-9_-][a-zA-Z0-9_-]*"
 t_GREATER_THAN = r">"
@@ -130,8 +129,9 @@ t_ignore = " \t"
 
 
 def t_COMMENTS(t):
-    r'(\/\/.*)|(\/\*.*\*\/)'
-    pass
+    r'(\/\/.*)|(\/\*.*\*\/)|(\/\*\*.*\*\/)'
+    t.type = reserved.get(t.value, "COMMENTS")
+    return t
 
 
 # Presentación de errores léxicos
@@ -204,7 +204,7 @@ data_string_luis = """
 data_double_jose = """
   var numero = -2.653;
   for( var i = 5. ; i >= 0.; i-- ) {
-      numero += (i*.75) ;
+      numero += i*.75 ;
    }
 """
 
