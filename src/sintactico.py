@@ -39,10 +39,10 @@ def p_forBucle(p):
     """
 
 def p_operation(p):
-    """operation : idComp DECREMENT_OPERATOR
-    | DECREMENT_OPERATOR idComp
-    | INCREMENT_OPERATOR idComp
-    | idComp INCREMENT_OPERATOR
+    """operation : pre_increment
+    | post_increment
+    | pre_decrement
+    | post_decrement
     | idComp operator idComp
     | idComp operator numericValue
     | numericValue operator idComp
@@ -65,7 +65,20 @@ def p_assignamentOP(p):
 def p_assignament(p):
     """codeLine : ID assignamentOP ID DOTCOMA
     | ID assignamentOP numericValue DOTCOMA
-    | ID EQUALS ID DOTCOMA"""
+    | ID EQUALS ID DOTCOMA
+    """
+
+def p_indexed_setter(p):
+    """ codeLine : index_access assign_operators ID DOTCOMA
+        | index_access assign_operators numericValue DOTCOMA
+
+    """
+
+def p_assign_operators(p):
+    """ assign_operators : EQUALS
+        | INCREMENT_SELF_ASSIGN_OPERATOR
+        | DECREMENT_SELF_ASSIGN_OPERATOR
+    """
 
 def p_emptyList(p):
     """codeLine : LIST LESS_THAN types GREATER_THAN ID EQUALS LSBRACKET RSBRACKET DOTCOMA
@@ -76,6 +89,10 @@ def p_emptyList(p):
 def p_list(p):
     "codeLine : LIST LESS_THAN types GREATER_THAN ID EQUALS LSBRACKET values RSBRACKET DOTCOMA"
 
+def p_index_access(p):
+    """ index_access : ID LSBRACKET values RSBRACKET
+        | symbol_chain LSBRACKET values RSBRACKET
+    """
 
 def p_listMethods(p):
     """codeLine : ID METHOD LPAREN RPAREN DOTCOMA
@@ -141,6 +158,7 @@ def p_value(p):
     | FALSE
     | ID
     | ID LSBRACKET value RSBRACKET
+    | index_access
     | invoke
     """
 
@@ -398,8 +416,17 @@ def p_error(p):
     _has_errors = True
     _last_error = p
     if p:
-        print("Error de sintaxis en token:", p.type)
-
+        if _as_lib:
+            print(f"[EDBG] lexer content: {p.lexer.__dir__()}")
+            print(f"[EDBG] Syntax error on token '{p.type}' line: {p.lineno} value '{p.value}' lex-token-no {p.lexpos}")
+            print(f"""
+            --- [Lexer analysis] ---
+            lexdata: {p.lexer.lexdata}
+            lineno: {p.lexer.lineno}
+            -------------------------
+            """)
+        else:
+            print("Error de sintaxis en token:", p.type)
         # print(f'[DEBUG] info of p: {p}')
         # sintactico.errok()
     else:
@@ -434,5 +461,6 @@ if __name__ == '__main__':
         if result != None:
             print(result)
 else:
+    _as_lib = True
     # Build the parser
     parserSintactico = yacc.yacc()

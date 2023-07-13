@@ -234,11 +234,11 @@ data_test_jose = """
 
 # lexer.input(data_double_jose)
 # lexer.input(data_set_jose)
-
-lexer.input("print(adfa);\nprint(adfa);")
-# Tokenizador
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+if __name__ == '__main__':
+  lexer.input("print(adfa);\nprint(adfa);")
+  # Tokenizador
+  while True:
+      tok = lexer.token()
+      if not tok:
+          break
+      print(tok)

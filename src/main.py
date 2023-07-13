@@ -15,6 +15,7 @@ def button_callback():
     console.delete("0.0", "end")
     # console.insert("0.0", text)
     console.insert('0.0', f'[{datetime.now()}] analisys time\n')
+
     try:
         print('[DEBUG] The text to parse is: ', f'"{text}"')
         result = parserSintactico.parse(text, tracking=True)
@@ -36,7 +37,8 @@ def button_callback():
     except ParseError as e:
         err = e.error
         if err:
-            console.insert("2.0", f"[{datetime.now()}] couldn't parse token {err.type}, value '{err.value}' on line {err.lineno}\n")
+            print(f'[DBGERR] The content of err: {err.__dir__()}')
+            console.insert("2.0", f"[{datetime.now()}] couldn't parse token {err.type}, value '{err.value}' on line {err.lineno}, lexpos{err.lexpos}\n")
         else:
             console.insert("2.0", f"[{datetime.now()}] error: EOF Error\n")
 
