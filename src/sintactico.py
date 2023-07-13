@@ -66,6 +66,7 @@ def p_assignament(p):
     """codeLine : ID assignamentOP ID DOTCOMA
     | ID assignamentOP numericValue DOTCOMA
     | ID EQUALS ID DOTCOMA
+    | ID EQUALS value DOTCOMA
     """
 
 def p_indexed_setter(p):
@@ -127,7 +128,11 @@ def p_NamedParametersfunction(p):
 def p_condition(p):
     """condition : idComp comparator idComp
     | value comparator value
+    | value comparator operation
+    | value comparator LPAREN operation RPAREN
     | idComp comparator value
+    | idComp comparator operation
+    | idComp comparator LPAREN operation RPAREN
     | value comparator idComp
     | ID
     """
@@ -157,7 +162,6 @@ def p_value(p):
     | TRUE
     | FALSE
     | ID
-    | ID LSBRACKET value RSBRACKET
     | index_access
     | invoke
     """
@@ -270,9 +274,12 @@ def p_declaration(p):
     | var_mods explicit_types ID DOTCOMA
     | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA
+    | VAR ID EQUALS symbol_chain DOTCOMA
     | VAR ID EQUALS value DOTCOMA
     | VAR ID DOTCOMA
     """
+    print('[dbg] The content of p: ', p)
+    return p
 
 def p_int_self_operation(p):
     """codeLine : ID DECREMENT_SELF_ASSIGN_OPERATOR int_value_statement DOTCOMA
@@ -396,17 +403,18 @@ def p_invoke(p):
     """invoke : ID LPAREN values RPAREN
     | ID LPAREN RPAREN
     | ID METHOD LPAREN values RPAREN
-    | symbol_chain DOT METHOD LPAREN RPAREN
-    | symbol_chain DOT METHOD LPAREN values RPAREN
+    | symbol_chain METHOD LPAREN RPAREN
+    | symbol_chain METHOD LPAREN values RPAREN
     """
 
 def p_codeInvoke(p):
     """codeLine : invoke"""
 
 def p_symbol_chain(p):
-    """ symbol_chain : ID DOT ID
+    """ symbol_chain : ID METHOD
         | ID DOT symbol_chain
     """
+    return p
 
 
 def p_error(p):
