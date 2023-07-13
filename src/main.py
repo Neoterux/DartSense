@@ -1,5 +1,5 @@
 import customtkinter
-import tkinter
+import tkinter as tk
 from sintactico import parserSintactico, getError
 from datetime import datetime
 
@@ -45,6 +45,18 @@ def button_callback():
 
     console.configure(state='disabled')
 
+def load_content():
+    print('Loading the file from fs')
+    filename = tk.filedialog.askopenfilename()
+    if not filename:
+        return
+    textbox.delete("0.0", "end")
+    lineno = 1
+    with open(filename, 'r') as f:
+        data = f.read()
+        textbox.insert(f"{lineno}.0", data)
+        lineno += 1
+
 app = customtkinter.CTk()
 
 app.after(0, lambda: app.wm_state('normal'))
@@ -59,6 +71,9 @@ center_w = width//2
 
 # app.geometry("%dx%d" % (width, height))
 app.minsize(center_w, center_h)
+
+load_button = customtkinter.CTkButton(app, text="Load from file", command=load_content)
+load_button.pack(padx=10, pady=5)
 
 button = customtkinter.CTkButton(app, text="Run", command=button_callback)
 button.pack(pady=10)
