@@ -6,18 +6,28 @@ _last_error = None
 _self_test = False
 
 def p_code(p):
-    """code : codeLine  LEAP
-    | codeLine """
+    """code : codeLine LEAP code
+    | codeLine
+    """
 
 def p_basic(p):
-    """codeLine : printfunc"""
+    "codeLine : printfunc DOTCOMA"
+
+def p_operationCode(p):
+    "codeLine : operation DOTCOMA"
+
+def p_return(p):
+    """codeLine : RETURN ID DOTCOMA
+    | RETURN value DOTCOMA
+    """
 
 def p_printFunction(p):
     """printfunc : PRINT LPAREN ID RPAREN
-    | PRINT LPAREN value RPAREN"""
+    | PRINT LPAREN value RPAREN
+    """
 
 def p_forBucle(p):
-    """codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET codeLine RCURLY_BRACKET"""
+    "codeLine : FOR LPAREN typesVarAsignation conditionProduction DOTCOMA operation RPAREN LCURLY_BRACKET"
 
 
 def p_operation(p):
@@ -101,7 +111,11 @@ def p_NamedParametersfunction(p):
 
 
 def p_condition(p):
-    "condition : ID comparator ID"
+    """condition : ID comparator ID
+    | value comparator value
+    | ID comparator value
+    | value comparator ID
+    """
 
 
 def p_conditionProduction(p):
@@ -121,6 +135,8 @@ def p_value(p):
     | STR
     | TRUE
     | FALSE
+    | ID
+    | ID LSBRACKET value RSBRACKET
     """
 
 
@@ -169,30 +185,30 @@ def p_requiredTypes(p):
     # LSBRACKET
 
 def p_num_self_operation(p):
-    """ codeLine : pre_decrement DOTCOMA
-        | post_decrement DOTCOMA
-        | pre_increment DOTCOMA
-        | post_increment DOTCOMA
+    """codeLine : pre_decrement DOTCOMA
+    | post_decrement DOTCOMA
+    | pre_increment DOTCOMA
+    | post_increment DOTCOMA
     """
 
 def p_pre_decrement(p):
-    """ pre_decrement : DECREMENT_OPERATOR ID
-        | DECREMENT_OPERATOR symbol_chain
+    """pre_decrement : DECREMENT_OPERATOR ID
+    | DECREMENT_OPERATOR symbol_chain
     """
 
 def p_post_decrement(p):
     """ post_decrement : ID DECREMENT_OPERATOR
-        | symbol_chain DECREMENT_OPERATOR
+    | symbol_chain DECREMENT_OPERATOR
     """
 
 def p_pre_increment(p):
-    """ pre_increment : INCREMENT_OPERATOR ID
-        | INCREMENT_OPERATOR symbol_chain
+    """pre_increment : INCREMENT_OPERATOR ID
+    | INCREMENT_OPERATOR symbol_chain
     """
 
 def p_post_increment(p):
-    """ post_increment : ID INCREMENT_OPERATOR
-        | symbol_chain INCREMENT_OPERATOR
+    """post_increment : ID INCREMENT_OPERATOR
+    | symbol_chain INCREMENT_OPERATOR
     """
 
 
@@ -203,7 +219,7 @@ def p_typesVarAsignation(p):
 
 def p_doubleTypeAsignation(p):
     """doubleTypeAsignation : var_mods DOUBLETYPE ID EQUALS DOUBLE
-        | var_mods NUM ID EQUALS DOUBLE
+    | var_mods NUM ID EQUALS DOUBLE
     """
 
 def p_logicalOperator(p):
@@ -228,20 +244,21 @@ def p_comparator(p):
 def p_declaration(p):
     """codeLine : types ID EQUALS value DOTCOMA
     | explicit_types ID DOTCOMA
+    | explicit_types ID EQUALS value DOTCOMA
     | var_mods explicit_types ID DOTCOMA
     | var_mods explicit_types CLOSEQUESTIONMARK ID DOTCOMA
     | LATE explicit_types nullsafe_mod ID DOTCOMA
     """
 
 def p_int_self_operation(p):
-    """ codeLine : ID DECREMENT_SELF_ASSIGN_OPERATOR int_value_statement
-        | ID INCREMENT_SELF_ASSIGN_OPERATOR int_value_statement
+    """codeLine : ID DECREMENT_SELF_ASSIGN_OPERATOR int_value_statement DOTCOMA
+    | ID INCREMENT_SELF_ASSIGN_OPERATOR int_value_statement DOTCOMA
     """
 
 def p_int_value_statement(p):
-    """ int_value_statement : numericValue
-        | invoke
-        | operation
+    """int_value_statement : numericValue
+    | invoke
+    | operation
     """
 
 

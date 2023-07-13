@@ -9,7 +9,7 @@ class ParseError(Exception):
         self.error = error
 
 def button_callback():
-    text = textbox.get("0.0", "end").rstrip(' \n').lstrip()
+    text = textbox.get("0.0", "end").rstrip('\n').lstrip()
 
     console.configure(state='normal')
     console.delete("0.0", "end")

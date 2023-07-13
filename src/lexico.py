@@ -34,6 +34,7 @@ reserved = {
 
 # Sequencia de tokens, puede ser lista o tupla
 tokens = (
+    "LEAP",
     "INT",
     "PLUS",
     "MINUS",
@@ -70,15 +71,14 @@ tokens = (
     "DOUBLE",
     "NEG",
     "CLOSEQUESTIONMARK",
-    "LEAP",
 ) + tuple(reserved.values())
 
 # Exp Regulares para tokens de símbolos
-t_LEAP = r"\n"
+t_LEAP = r"\n+"
 t_DECREMENT_OPERATOR = r"--"
 t_INCREMENT_OPERATOR = r"\+\+"
 t_INCREMENT_SELF_ASSIGN_OPERATOR = r"\+="
-t_DECREMENT_SELF_ASSIGN_OPERATOR = r"\-="
+t_DECREMENT_SELF_ASSIGN_OPERATOR = r"-="
 t_PLUS = r"\+"
 t_MINUS = r"-"
 t_TIMES = r"\*"
@@ -115,6 +115,8 @@ t_CLOSEQUESTIONMARK = r'\?'
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
+    t.type = reserved.get(t.value, "LEAP")
+    return t
 
 
 def t_ID(t):
@@ -232,11 +234,11 @@ data_test_jose = """
 
 # lexer.input(data_double_jose)
 # lexer.input(data_set_jose)
-lexer.input(data_int_jairo)
 
+lexer.input("print(adfa);\nprint(adfa);")
 # Tokenizador
-# while True:
-#     tok = lexer.token()
-#     if not tok:
-#         break
-#     print(tok)
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    print(tok)
